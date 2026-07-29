@@ -1,180 +1,214 @@
-<!DOCTYPE html>
+{% load static %}
 {% load widget_tweaks %}
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account – ApnoraMart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      background: #f4f5f7;
+      -webkit-font-smoothing: antialiased;
+    }
 
+    .auth-left {
+      display: none;
+      flex: 1;
+      background: linear-gradient(145deg, #1b5e20 0%, #2e7d32 45%, #43a047 75%, #81c784 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 48px;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media(min-width:900px){ .auth-left { display: flex; } }
+    .auth-left::before {
+      content:''; position:absolute; top:-120px; right:-120px;
+      width:500px; height:500px; border-radius:50%;
+      background:rgba(255,255,255,.06);
+    }
+    .auth-left::after {
+      content:''; position:absolute; bottom:-80px; left:-80px;
+      width:340px; height:340px; border-radius:50%;
+      background:rgba(255,255,255,.05);
+    }
+    .auth-brand { font-size:28px; font-weight:800; color:#fff; letter-spacing:-.03em; }
+    .auth-brand span { color:#ffe082; }
+    .auth-hero-text { position:relative; z-index:2; }
+    .auth-hero-text h1 { font-size:38px; font-weight:800; color:#fff; line-height:1.15; letter-spacing:-.03em; margin-bottom:14px; }
+    .auth-hero-text p { font-size:15px; color:rgba(255,255,255,.75); line-height:1.7; max-width:340px; }
+    .auth-stats { position:relative; z-index:2; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .auth-stat {
+      background:rgba(255,255,255,.12); backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.18); border-radius:12px;
+      padding:18px; text-align:center;
+    }
+    .auth-stat-num { font-size:26px; font-weight:800; color:#fff; }
+    .auth-stat-label { font-size:12px; color:rgba(255,255,255,.65); margin-top:4px; }
 
+    /* RIGHT */
+    .auth-right {
+      flex:0 0 100%; max-width:100%;
+      display:flex; align-items:center; justify-content:center;
+      padding:24px 16px;
+    }
+    @media(min-width:900px){ .auth-right { flex:0 0 480px; max-width:480px; overflow-y:auto; } }
 
+    .auth-card {
+      width:100%; max-width:420px;
+      background:#fff; border-radius:20px;
+      padding:36px 32px;
+      box-shadow:0 8px 40px rgba(0,0,0,.10),0 2px 8px rgba(0,0,0,.06);
+    }
+    .auth-mobile-brand {
+      text-align:center; font-size:24px; font-weight:800;
+      color:#2874f0; letter-spacing:-.03em; margin-bottom:24px;
+    }
+    .auth-mobile-brand span { color:#ff6b35; }
+    @media(min-width:900px){ .auth-mobile-brand { display:none; } }
+    .auth-card-title { font-size:24px; font-weight:800; color:#0d0d0d; letter-spacing:-.03em; margin-bottom:4px; }
+    .auth-card-sub { font-size:14px; color:#888; margin-bottom:24px; }
 
-    <style media="screen">
-      body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to right, #b92b27, #1565c0)
-}
+    .auth-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 
-.box {
-    width: 500px;
-    padding: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background: #191919;
-    ;
-    text-align: center;
-    transition: 0.25s;
-    margin-top: 100px
-}
+    .auth-field { margin-bottom:14px; }
+    .auth-field label { display:block; font-size:13px; font-weight:600; color:#444; margin-bottom:6px; }
+    .auth-input {
+      width:100%; padding:11px 14px 11px 42px;
+      border:1.5px solid #e8e8e8; border-radius:10px;
+      font-size:14px; font-family:'Inter',sans-serif; color:#111;
+      background:#fafafa; outline:none;
+      transition:border-color .2s, box-shadow .2s, background .2s;
+    }
+    .auth-input:focus { border-color:#2874f0; background:#fff; box-shadow:0 0 0 4px rgba(40,116,240,.12); }
+    .auth-input-wrap { position:relative; }
+    .auth-input-icon {
+      position:absolute; left:13px; top:50%; transform:translateY(-50%);
+      color:#bbb; font-size:14px; pointer-events:none; transition:color .2s;
+    }
+    .auth-input-wrap:focus-within .auth-input-icon { color:#2874f0; }
 
-.box input[type="text"],
-.box input[type="password"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 10px 10px;
-    width: 250px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s
-}
+    .auth-submit {
+      width:100%; padding:14px;
+      background:linear-gradient(135deg,#2874f0,#1a5dc8);
+      color:#fff; border:none; border-radius:10px;
+      font-size:15px; font-weight:700; font-family:'Inter',sans-serif;
+      cursor:pointer; margin-top:8px;
+      transition:all .2s;
+      box-shadow:0 4px 16px rgba(40,116,240,.35);
+    }
+    .auth-submit:hover { transform:translateY(-1px); box-shadow:0 6px 22px rgba(40,116,240,.4); }
+    .auth-footer-link { text-align:center; font-size:14px; color:#888; margin-top:20px; }
+    .auth-footer-link a { color:#2874f0; font-weight:700; text-decoration:none; }
+    .auth-footer-link a:hover { text-decoration:underline; }
 
-.box h1 {
-    color: white;
-    text-transform: uppercase;
-    font-weight: 500
-}
+    .auth-section-label {
+      font-size:11px; font-weight:700; color:#bbb;
+      text-transform:uppercase; letter-spacing:.08em;
+      margin:14px 0 10px; border-top:1px solid #f0f0f0; padding-top:14px;
+    }
+  </style>
+</head>
+<body>
 
-.box input[type="text"]:focus,
-.box input[type="password"]:focus {
-    width: 300px;
-    border-color: #2ecc71
-}
-
-.box input[type="submit"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-    cursor: pointer
-}
-
-.box input[type="submit"]:hover {
-    background: #2ecc71
-}
-
-.forgot {
-    text-decoration: underline
-}
-
-ul.social-network {
-    list-style: none;
-    display: inline;
-    margin-left: 0 !important;
-    padding: 0
-}
-
-ul.social-network li {
-    display: inline;
-    margin: 0 5px
-}
-
-.social-network a.icoFacebook:hover {
-    background-color: #3B5998
-}
-
-.social-network a.icoTwitter:hover {
-    background-color: #33ccff
-}
-
-.social-network a.icoGoogle:hover {
-    background-color: #BD3518
-}
-
-.social-network a.icoFacebook:hover i,
-.social-network a.icoTwitter:hover i,
-.social-network a.icoGoogle:hover i {
-    color: #fff
-}
-
-a.socialIcon:hover,
-.socialHoverClass {
-    color: #44BCDD
-}
-
-.social-circle li a {
-    display: inline-block;
-    position: relative;
-    margin: 0 auto 0 auto;
-    border-radius: 50%;
-    text-align: center;
-    width: 50px;
-    height: 50px;
-    font-size: 20px
-}
-
-.social-circle li i {
-    margin: 0;
-    line-height: 50px;
-    text-align: center
-}
-
-.social-circle li a:hover i,
-.triggeredHover {
-    transform: rotate(360deg);
-    transition: all 0.2s
-}
-
-.social-circle i {
-    color: #fff;
-    transition: all 0.8s;
-    transition: all 0.8s
-}
-    </style>
-  </head>
-  <body>
-    {% include "ecom/navbar.html" %}
-    <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <form class="box" method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                    <h1>CUSTOMER SIGNUP</h1>
-                    <p class="text-muted"> Please enter your details to create account !</p>
-                      {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
-                        {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
-                          {% render_field userForm.username class="form-control" placeholder="Username" %}
-                            {% render_field userForm.password class="form-control" placeholder="Password" %}
-                              {% render_field customerForm.address class="form-control" placeholder="Address" %}
-                                {% render_field customerForm.mobile class="form-control" placeholder="Mobile" %}
-                                  {% render_field customerForm.profile_pic class="form-control" placeholder="Profile pic" %}
-                  
-                     <input type="submit" name="" value="Create">
-
-                </form>
-            </div>
-        </div>
-    </div>
+<!-- LEFT -->
+<div class="auth-left">
+  <div class="auth-brand">Apnora<span>Mart</span></div>
+  <div class="auth-hero-text">
+    <h1>Join Millions of<br>Happy Shoppers</h1>
+    <p>Create your free account and discover the best deals on electronics, fashion, groceries and more.</p>
+  </div>
+  <div class="auth-stats">
+    <div class="auth-stat"><div class="auth-stat-num">2M+</div><div class="auth-stat-label">Happy Customers</div></div>
+    <div class="auth-stat"><div class="auth-stat-num">50K+</div><div class="auth-stat-label">Products Listed</div></div>
+    <div class="auth-stat"><div class="auth-stat-num">99%</div><div class="auth-stat-label">Satisfaction Rate</div></div>
+    <div class="auth-stat"><div class="auth-stat-num">24h</div><div class="auth-stat-label">Fast Delivery</div></div>
+  </div>
 </div>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br>
-{% include "ecom/footer.html" %}
-  </body>
+
+<!-- RIGHT -->
+<div class="auth-right">
+  <div class="auth-card">
+    <div class="auth-mobile-brand">Apnora<span>Mart</span></div>
+    <div class="auth-card-title">Create your account ✨</div>
+    <div class="auth-card-sub">Join ApnoraMart — it's free and takes 30 seconds</div>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="auth-row">
+        <div class="auth-field">
+          <label>First Name</label>
+          <div class="auth-input-wrap">
+            <i class="fa-solid fa-user auth-input-icon"></i>
+            {% render_field userForm.first_name class="auth-input" placeholder="First Name" %}
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>Last Name</label>
+          <div class="auth-input-wrap">
+            <i class="fa-solid fa-user auth-input-icon"></i>
+            {% render_field userForm.last_name class="auth-input" placeholder="Last Name" %}
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <label>Username</label>
+        <div class="auth-input-wrap">
+          <i class="fa-solid fa-at auth-input-icon"></i>
+          {% render_field userForm.username class="auth-input" placeholder="Choose a username" %}
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <label>Password</label>
+        <div class="auth-input-wrap">
+          <i class="fa-solid fa-lock auth-input-icon"></i>
+          {% render_field userForm.password class="auth-input" placeholder="Create a strong password" %}
+        </div>
+      </div>
+
+      <div class="auth-section-label">Delivery & Contact</div>
+
+      <div class="auth-field">
+        <label>Mobile Number</label>
+        <div class="auth-input-wrap">
+          <i class="fa-solid fa-phone auth-input-icon"></i>
+          {% render_field customerForm.mobile class="auth-input" placeholder="+91 XXXXX XXXXX" %}
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <label>Delivery Address</label>
+        <div class="auth-input-wrap">
+          <i class="fa-solid fa-location-dot auth-input-icon"></i>
+          {% render_field customerForm.address class="auth-input" placeholder="Your full delivery address" %}
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <label>Profile Picture <span style="color:#bbb;font-weight:400;">(optional)</span></label>
+        {% render_field customerForm.profile_pic class="auth-input" style="padding-left:14px;" %}
+      </div>
+
+      <button type="submit" class="auth-submit">
+        🎉 Create My Account
+      </button>
+    </form>
+
+    <div class="auth-footer-link">
+      Already have an account? <a href="/customerlogin">Sign in</a>
+    </div>
+  </div>
+</div>
+
+</body>
 </html>

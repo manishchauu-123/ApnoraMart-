@@ -1,104 +1,73 @@
-<!DOCTYPE html>
+{% extends 'ecom/homebase.html' %}
 {% load widget_tweaks %}
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <style media="screen">
-      body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to right, #b92b27, #1565c0)
-}
 
-.box {
-    width: 500px;
-    padding: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background: #191919;
-    
+{% block content %}
+<style>
+  .auth-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg) 0;
+  }
+  .auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--surface-color);
+    border-radius: var(--radius-lg);
+    padding: 40px var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(0,0,0,0.04);
     text-align: center;
-    transition: 0.25s;
-    margin-top: 100px
-}
+  }
+  .auth-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.02em;
+  }
+  .auth-subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: var(--spacing-xl);
+  }
+  .auth-input-group {
+    margin-bottom: var(--spacing-md);
+    text-align: left;
+  }
+  .auth-btn {
+    width: 100%;
+    margin-top: var(--spacing-md);
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+</style>
 
-.box input[type="text"],
-.box input[type="password"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 10px 10px;
-    width: 250px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s
-}
-
-.box h1 {
-    color: white;
-    text-transform: uppercase;
-    font-weight: 500
-}
-
-.box input[type="text"]:focus,
-.box input[type="password"]:focus {
-    width: 300px;
-    border-color: #2ecc71
-}
-
-.box input[type="submit"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-    cursor: pointer
-}
-
-.box input[type="submit"]:hover {
-    background: #2ecc71
-}
-
-
-    </style>
-  </head>
-  <body>
-    {% include "ecom/navbar.html" %}
-    <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <form class="box" method="post">
-                    {% csrf_token %}
-                    <h1>Admin Login</h1>
-                    <p class="text-muted"> Please enter your login and password!</p>
-
-                     {% render_field form.username class="form-control" placeholder="Username" %}
-                     {% render_field form.password class="form-control" placeholder="Password" %}
-
-                     <input type="submit" name="" value="Login">
-
-                </form>
-            </div>
-        </div>
+<div class="auth-container">
+  <div class="auth-card">
+    <div style="margin-bottom: 20px;">
+      <i class="fa-solid fa-shield-halved" style="font-size: 40px; color: var(--danger-color);"></i>
     </div>
+    <h1 class="auth-title">Admin Access</h1>
+    <p class="auth-subtitle">Authorized personnel only</p>
+    
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="auth-input-group">
+        {% render_field form.username class="premium-input" placeholder="Admin Username" %}
+      </div>
+      
+      <div class="auth-input-group">
+        {% render_field form.password class="premium-input" placeholder="Password" %}
+      </div>
+      
+      <button type="submit" class="btn-premium btn-premium-primary auth-btn" style="background-color: var(--danger-color);">
+        Login to Dashboard
+      </button>
+    </form>
+  </div>
 </div>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-{% include "ecom/footer.html" %}
-  </body>
-</html>
+{% endblock content %}

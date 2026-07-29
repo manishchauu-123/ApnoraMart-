@@ -2,173 +2,177 @@
 {% load static %}
 {% block content %}
 
-<style>
-/* 🌟 FLIPKART STYLE UI */
-body {
-    background-color: #f1f3f6;
-    font-family: Roboto, Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
+<!-- ═══ HERO BANNER ═══ -->
+<div id="heroBanner" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="3500">
+  <div class="carousel-inner" style="border-radius:14px;overflow:hidden;">
+    <div class="carousel-item active">
+      <div style="height:280px;background:linear-gradient(135deg,#1a3c8e 0%,#2874f0 60%,#42a5f5 100%);display:flex;align-items:center;padding:32px 48px;gap:32px;">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#ffe082;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">🔥 Big Sale is Live</div>
+          <h2 style="font-size:clamp(22px,4vw,42px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em;">Up to 70% off<br>on iPhones & Gadgets</h2>
+          <p style="color:rgba(255,255,255,.75);font-size:14px;margin-bottom:20px;">Limited time offer. Shop before it's gone.</p>
+          <a href="/customerlogin" style="background:#ffe082;color:#111;font-weight:700;padding:12px 28px;border-radius:99px;font-size:14px;display:inline-block;transition:transform .15s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">Shop Now →</a>
+        </div>
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=280&q=80" alt="iPhone" style="height:200px;object-fit:contain;border-radius:12px;display:none;" class="d-md-block">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div style="height:280px;background:linear-gradient(135deg,#1b5e20 0%,#2e7d32 60%,#66bb6a 100%);display:flex;align-items:center;padding:32px 48px;">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#c8e6c9;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">⚡ Flash Deal</div>
+          <h2 style="font-size:clamp(22px,4vw,42px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em;">Fresh Groceries<br>at Doorstep</h2>
+          <p style="color:rgba(255,255,255,.75);font-size:14px;margin-bottom:20px;">Farm fresh, delivered within hours.</p>
+          <a href="/customerlogin" style="background:#fff;color:#2e7d32;font-weight:700;padding:12px 28px;border-radius:99px;font-size:14px;display:inline-block;">Order Now →</a>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div style="height:280px;background:linear-gradient(135deg,#4a148c 0%,#7b1fa2 60%,#ce93d8 100%);display:flex;align-items:center;padding:32px 48px;">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#e1bee7;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">👗 Fashion Week</div>
+          <h2 style="font-size:clamp(22px,4vw,42px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em;">Trending Styles<br>Flat 50% Off</h2>
+          <p style="color:rgba(255,255,255,.75);font-size:14px;margin-bottom:20px;">Top brands, unbeatable prices.</p>
+          <a href="/customerlogin" style="background:#fff;color:#7b1fa2;font-weight:700;padding:12px 28px;border-radius:99px;font-size:14px;display:inline-block;">Explore →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroBanner" data-bs-slide="prev" style="width:40px;">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroBanner" data-bs-slide="next" style="width:40px;">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+  <div class="carousel-indicators" style="margin-bottom:8px;">
+    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="0" class="active" style="width:8px;height:8px;border-radius:99px;"></button>
+    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="1" style="width:8px;height:8px;border-radius:99px;"></button>
+    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="2" style="width:8px;height:8px;border-radius:99px;"></button>
+  </div>
+</div>
 
-/* 🚀 CATEGORY SECTION (Image 1 style) */
-.flipkart-categories {
-    display: flex;
-    overflow-x: auto;
-    background: #fff;
-    padding: 12px 10px;
-    gap: 30px;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-    margin-bottom: 10px;
-    justify-content: flex-start;
-}
-.flipkart-categories::-webkit-scrollbar { 
-    display: none; 
-}
-.category-item {
-    text-align: center;
-    min-width: 64px;
-    cursor: pointer;
-    text-decoration: none !important;
-}
-.category-img {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    transition: transform 0.2s;
-}
-.category-item:hover .category-img {
-    transform: scale(1.05);
-}
-.category-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-    margin-top: 8px;
-}
+<!-- ═══ TRUST BAR ═══ -->
+<div class="pm-trust-bar mb-4">
+  <div class="pm-trust-item">
+    <div class="pm-trust-icon" style="color:#2874f0;">🚚</div>
+    <div><div class="pm-trust-title">Free Delivery</div><div class="pm-trust-sub">On orders above ₹499</div></div>
+  </div>
+  <div class="pm-trust-item">
+    <div class="pm-trust-icon" style="color:#03a685;">🔒</div>
+    <div><div class="pm-trust-title">Secure Payment</div><div class="pm-trust-sub">100% safe checkout</div></div>
+  </div>
+  <div class="pm-trust-item">
+    <div class="pm-trust-icon" style="color:#f0a500;">↩️</div>
+    <div><div class="pm-trust-title">Easy Returns</div><div class="pm-trust-sub">7-day return policy</div></div>
+  </div>
+  <div class="pm-trust-item">
+    <div class="pm-trust-icon" style="color:#e53935;">💎</div>
+    <div><div class="pm-trust-title">Premium Quality</div><div class="pm-trust-sub">Verified sellers only</div></div>
+  </div>
+</div>
 
-/* 🎁 PRODUCT DEALS (Image 2 style) */
-.deal-container {
-    background: #fff;
-    border-radius: 4px;
-    padding: 15px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    margin: 10px;
-}
-.deal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 10px;
-}
-.deal-title {
-    font-size: 22px;
-    font-weight: 500;
-    color: #000;
-}
-.view-all-btn {
-    background: #2874f0;
-    color: #fff;
-    padding: 8px 20px;
-    border-radius: 2px;
-    text-decoration: none;
-    font-weight: 500;
-}
-.product-slider {
-    display: flex;
-    overflow-x: auto;
-    gap: 15px;
-    padding-bottom: 15px;
-}
-.product-slider::-webkit-scrollbar { 
-    height: 6px; 
-}
-.product-slider::-webkit-scrollbar-thumb { 
-    background: #d1d1d1; 
-    border-radius: 10px; 
-}
-.product-card {
-    min-width: 200px;
-    max-width: 200px;
-    text-align: center;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    padding: 15px 10px;
-    background: #fff;
-    transition: box-shadow 0.2s;
-}
-.product-card:hover {
-    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-}
-.product-card img {
-    width: 130px;
-    height: 130px;
-    object-fit: contain;
-    margin-bottom: 15px;
-}
-.product-name {
-    font-size: 14px;
-    color: #212121;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.product-price {
-    font-size: 16px;
-    color: #388e3c;
-    font-weight: bold;
-    margin-top: 8px;
-}
-.add-cart-btn {
-    width: 100%;
-    margin-top: 10px;
-    border-radius: 2px;
-    background-color: #ff9f00;
-    border: none;
-    color: white;
-    padding: 8px;
-    font-weight: bold;
-}
-</style>
-
-<div class="flipkart-categories">
+<!-- ═══ CATEGORIES ═══ -->
+{% if categories %}
+<div class="pm-section mb-4">
+  <div class="pm-section-header">
+    <div class="pm-section-title"><span class="title-accent"></span> Shop by Category</div>
+  </div>
+  <div class="pm-categories">
     {% for c in categories %}
-    <a href="/category/{{ c.id }}/" class="category-item">
+    <a href="/category/{{ c.id }}/" class="pm-cat-chip">
+      <div class="pm-cat-img-box">
         {% if c.image %}
-            <img src="{{ c.image.url }}" class="category-img" alt="{{ c.name }}">
+          <img src="{{ c.image.url }}" alt="{{ c.name }}">
+        {% else %}
+          <i class="fa-solid fa-box" style="font-size:24px;color:#999;"></i>
         {% endif %}
-        <div class="category-name">{{ c.name }}</div>
+      </div>
+      <span class="pm-cat-label">{{ c.name }}</span>
     </a>
     {% endfor %}
-</div>
-
-{% if products %}
-<div class="deal-container">
-    <div class="deal-header">
-        <div class="deal-title">Best of Electronics</div>
-        <a href="#" class="view-all-btn">VIEW ALL</a>
-    </div>
-
-    <div class="product-slider">
-        {% for p in products %}
-        <div class="product-card">
-            <a href="/add-to-cart/{{ p.id }}" style="text-decoration: none;">
-                <img src="{{ p.product_image.url }}" alt="{{ p.name }}">
-                <div class="product-name">{{ p.name }}</div>
-                <div class="product-price">₹ {{ p.price }}</div>
-            </a>
-            {% if request.user.is_authenticated %}
-                <button class="add-cart-btn" onclick="window.location.href='/add-to-cart/{{p.id}}'">🛒 Add to Cart</button>
-            {% else %}
-                <a href="{% url 'customerlogin' %}" class="btn btn-warning" style="width:100%; margin-top:10px; border-radius:2px;">Login to Buy</a>
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>
+  </div>
 </div>
 {% endif %}
+
+<!-- ═══ FLASH SALE ═══ -->
+{% if products %}
+<div class="pm-section mb-4">
+  <div class="pm-section-header">
+    <div class="pm-section-title">
+      <span class="title-accent" style="background:var(--sale-red);"></span>
+      ⚡ Flash Sale
+      <div class="pm-deal-timer" data-timer="5400">
+        <span class="pm-timer-box"><span class="t-h">01</span></span>:
+        <span class="pm-timer-box"><span class="t-m">30</span></span>:
+        <span class="pm-timer-box"><span class="t-s">00</span></span>
+      </div>
+    </div>
+    <a href="#" class="pm-view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+
+  <div class="pm-product-grid">
+    {% for p in products %}
+    <div class="pm-card">
+      <!-- Sale Badge -->
+      <div class="pm-badge pm-badge-sale">20% OFF</div>
+      <!-- Wishlist -->
+      <button class="pm-wishlist-btn" title="Wishlist"><i class="fa-regular fa-heart"></i></button>
+
+      <!-- Image -->
+      <a href="/add-to-cart/{{ p.id }}">
+        <div class="pm-card-img-wrap">
+          {% if p.product_image %}
+            <img src="{{ p.product_image.url }}" alt="{{ p.name }}" loading="lazy">
+          {% else %}
+            <i class="fa-solid fa-image" style="font-size:48px;color:#ddd;"></i>
+          {% endif %}
+        </div>
+      </a>
+
+      <!-- Body -->
+      <div class="pm-card-body">
+        <div class="pm-card-brand">ApnoraMart</div>
+        <a href="/add-to-cart/{{ p.id }}" style="text-decoration:none;"><div class="pm-card-name">{{ p.name }}</div></a>
+
+        <!-- Stars -->
+        <div class="pm-stars">
+          <span class="stars">★★★★☆</span>
+          <span class="count">(128)</span>
+        </div>
+
+        <!-- Price -->
+        <div class="pm-card-price-row">
+          <span class="pm-card-price">₹{{ p.price }}</span>
+          <span class="pm-card-price-old">₹{{ p.price|add:p.price }}</span>
+          <span class="pm-card-discount">20% off</span>
+        </div>
+
+        <div class="pm-card-delivery"><i class="fa-solid fa-truck-fast"></i> Free delivery by Tomorrow</div>
+
+        <!-- Actions -->
+        <div class="pm-card-actions">
+          {% if request.user.is_authenticated %}
+            <a href="/add-to-cart/{{ p.id }}" class="pm-btn-cart"><i class="fa-solid fa-cart-plus"></i> Add to Cart</a>
+            <a href="/add-to-cart/{{ p.id }}" class="pm-btn-buy">Buy Now</a>
+          {% else %}
+            <a href="{% url 'customerlogin' %}" class="pm-btn-cart"><i class="fa-solid fa-cart-plus"></i> Add to Cart</a>
+            <a href="{% url 'customerlogin' %}" class="pm-btn-buy">Buy Now</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- ═══ NEWSLETTER ═══ -->
+<div class="pm-newsletter">
+  <h3>🎁 Get Exclusive Deals in Your Inbox</h3>
+  <p>Subscribe and be the first to know about our best offers, new arrivals and flash sales.</p>
+  <div class="pm-newsletter-form">
+    <input class="pm-newsletter-input" type="email" placeholder="Enter your email address…">
+    <button class="pm-newsletter-btn">Subscribe</button>
+  </div>
+</div>
 
 {% endblock %}

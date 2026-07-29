@@ -1,168 +1,393 @@
-<!DOCTYPE html>
+{% load static %}
 {% load widget_tweaks %}
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>E-Commerce</title>
-    <style media="screen">
-      body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to right, #b92b27, #1565c0)
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – ApnoraMart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      background: #f4f5f7;
+      -webkit-font-smoothing: antialiased;
+    }
 
-.box {
-    width: 500px;
-    padding: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background: #191919;
-    ;
-    text-align: center;
-    transition: 0.25s;
-    margin-top: 100px
-}
+    /* ── LEFT PANEL ── */
+    .auth-left {
+      display: none;
+      flex: 1;
+      background: linear-gradient(145deg, #0d1b6e 0%, #1a3c8e 40%, #2874f0 75%, #42a5f5 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 48px;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media(min-width:900px){ .auth-left { display: flex; } }
 
-.box input[type="text"],
-.box input[type="password"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 10px 10px;
-    width: 250px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s
-}
+    .auth-left::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.06);
+    }
+    .auth-left::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.05);
+    }
 
-.box h1 {
-    color: white;
-    text-transform: uppercase;
-    font-weight: 500
-}
+    .auth-brand {
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.03em;
+    }
+    .auth-brand span { color: #ffe082; }
 
-.box input[type="text"]:focus,
-.box input[type="password"]:focus {
-    width: 300px;
-    border-color: #2ecc71
-}
+    .auth-hero-text {
+      position: relative;
+      z-index: 2;
+    }
+    .auth-hero-text h1 {
+      font-size: 42px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      letter-spacing: -.03em;
+      margin-bottom: 16px;
+    }
+    .auth-hero-text p {
+      font-size: 15px;
+      color: rgba(255,255,255,.7);
+      line-height: 1.7;
+      max-width: 340px;
+    }
 
-.box input[type="submit"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-    cursor: pointer
-}
+    .auth-perks {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .auth-perk {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 12px;
+      padding: 14px 18px;
+    }
+    .auth-perk-icon {
+      font-size: 22px;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .auth-perk-title { font-size: 14px; font-weight: 700; color: #fff; }
+    .auth-perk-sub   { font-size: 12px; color: rgba(255,255,255,.65); }
 
-.box input[type="submit"]:hover {
-    background: #2ecc71
-}
+    /* ── RIGHT PANEL ── */
+    .auth-right {
+      flex: 0 0 100%;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+    }
+    @media(min-width:900px){
+      .auth-right { flex: 0 0 440px; max-width: 440px; }
+    }
 
-.forgot {
-    text-decoration: underline
-}
+    .auth-card {
+      width: 100%;
+      max-width: 380px;
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 36px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
+    }
 
-ul.social-network {
-    list-style: none;
-    display: inline;
-    margin-left: 0 !important;
-    padding: 0
-}
+    /* Mobile brand */
+    .auth-mobile-brand {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 800;
+      color: #2874f0;
+      letter-spacing: -.03em;
+      margin-bottom: 28px;
+    }
+    .auth-mobile-brand span { color: #ff6b35; }
+    @media(min-width:900px){ .auth-mobile-brand { display: none; } }
 
-ul.social-network li {
-    display: inline;
-    margin: 0 5px
-}
+    .auth-card-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0d0d0d;
+      letter-spacing: -.03em;
+      margin-bottom: 6px;
+    }
+    .auth-card-sub {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 30px;
+    }
 
-.social-network a.icoFacebook:hover {
-    background-color: #3B5998
-}
+    /* Inputs */
+    .auth-field {
+      margin-bottom: 16px;
+    }
+    .auth-field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 6px;
+    }
+    .auth-input {
+      width: 100%;
+      padding: 13px 16px 13px 44px;
+      border: 1.5px solid #e8e8e8;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: #111;
+      background: #fafafa;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+    .auth-input:focus {
+      border-color: #2874f0;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(40,116,240,.12);
+    }
+    .auth-input-wrap {
+      position: relative;
+    }
+    .auth-input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #bbb;
+      font-size: 15px;
+      pointer-events: none;
+      transition: color .2s;
+    }
+    .auth-input-wrap:focus-within .auth-input-icon { color: #2874f0; }
 
-.social-network a.icoTwitter:hover {
-    background-color: #33ccff
-}
+    /* Submit Button */
+    .auth-submit {
+      width: 100%;
+      padding: 14px;
+      background: #2874f0;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 16px rgba(40,116,240,.35);
+      letter-spacing: .01em;
+    }
+    .auth-submit:hover {
+      background: #1a5dc8;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(40,116,240,.4);
+    }
+    .auth-submit:active { transform: translateY(0); }
 
-.social-network a.icoGoogle:hover {
-    background-color: #BD3518
-}
+    /* Divider */
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #eee;
+    }
+    .auth-divider span { font-size: 12px; color: #bbb; font-weight: 500; }
 
-.social-network a.icoFacebook:hover i,
-.social-network a.icoTwitter:hover i,
-.social-network a.icoGoogle:hover i {
-    color: #fff
-}
+    /* Footer links */
+    .auth-footer-link {
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      margin-top: 24px;
+    }
+    .auth-footer-link a {
+      color: #2874f0;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .auth-footer-link a:hover { text-decoration: underline; }
 
-a.socialIcon:hover,
-.socialHoverClass {
-    color: #44BCDD
-}
+    /* Other login links */
+    .auth-other-links {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .auth-other-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px;
+      border: 1.5px solid #e8e8e8;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .auth-other-btn:hover {
+      border-color: #2874f0;
+      background: #f0f5ff;
+      color: #2874f0;
+    }
+    .auth-other-btn i { font-size: 16px; }
 
-.social-circle li a {
-    display: inline-block;
-    position: relative;
-    margin: 0 auto 0 auto;
-    border-radius: 50%;
-    text-align: center;
-    width: 50px;
-    height: 50px;
-    font-size: 20px
-}
+    /* Error messages */
+    .auth-error {
+      background: #fff3f3;
+      border: 1px solid #ffcdd2;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #c62828;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
 
-.social-circle li i {
-    margin: 0;
-    line-height: 50px;
-    text-align: center
-}
+<!-- LEFT — Brand Showcase -->
+<div class="auth-left">
+  <div class="auth-brand">Apnora<span>Mart</span></div>
 
-.social-circle li a:hover i,
-.triggeredHover {
-    transform: rotate(360deg);
-    transition: all 0.2s
-}
+  <div class="auth-hero-text">
+    <h1>India's Premium<br>Shopping Destination</h1>
+    <p>Millions of products. Unbeatable prices. Lightning fast delivery. All in one place.</p>
+  </div>
 
-.social-circle i {
-    color: #fff;
-    transition: all 0.8s;
-    transition: all 0.8s
-}
-    </style>
-  </head>
-  <body>
-    {% include "ecom/navbar.html" %}
-    <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <form class="box" method="post">
-                  {% csrf_token %}
-                    <h1>Customer Login</h1>
-                    <p class="text-muted"> Please enter your login and password!</p>
-                               {% render_field form.username class="form-control" placeholder="Username" %}
-                               {% render_field form.password class="form-control" placeholder="Password" %}
-                     <input type="submit" name="" value="Login" >
-
-                </form>
-            </div>
-        </div>
+  <div class="auth-perks">
+    <div class="auth-perk">
+      <div class="auth-perk-icon">🚀</div>
+      <div>
+        <div class="auth-perk-title">Lightning Fast Delivery</div>
+        <div class="auth-perk-sub">Get products at your door in 24 hours</div>
+      </div>
     </div>
+    <div class="auth-perk">
+      <div class="auth-perk-icon">🔐</div>
+      <div>
+        <div class="auth-perk-title">100% Secure Checkout</div>
+        <div class="auth-perk-sub">Your data is protected end-to-end</div>
+      </div>
+    </div>
+    <div class="auth-perk">
+      <div class="auth-perk-icon">💰</div>
+      <div>
+        <div class="auth-perk-title">Best Price Guarantee</div>
+        <div class="auth-perk-sub">We match any price, anytime</div>
+      </div>
+    </div>
+  </div>
 </div>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-{% include "ecom/footer.html" %}
-  </body>
+
+<!-- RIGHT — Login Form -->
+<div class="auth-right">
+  <div class="auth-card">
+
+    <!-- Mobile Only Logo -->
+    <div class="auth-mobile-brand">Apnora<span>Mart</span></div>
+
+    <div class="auth-card-title">Welcome back 👋</div>
+    <div class="auth-card-sub">Sign in to continue your premium shopping</div>
+
+    {% if form.errors %}
+    <div class="auth-error">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      Invalid username or password. Please try again.
+    </div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="auth-field">
+        <label for="id_username">Username</label>
+        <div class="auth-input-wrap">
+          <i class="fa-solid fa-user auth-input-icon"></i>
+          {% render_field form.username class="auth-input" placeholder="Enter your username" id="id_username" %}
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <label for="id_password">Password</label>
+        <div class="auth-input-wrap">
+          <i class="fa-solid fa-lock auth-input-icon"></i>
+          {% render_field form.password class="auth-input" placeholder="Enter your password" id="id_password" %}
+        </div>
+      </div>
+
+      <button type="submit" class="auth-submit">
+        Sign In to ApnoraMart
+      </button>
+    </form>
+
+    <div class="auth-divider"><span>OR CONTINUE AS</span></div>
+
+    <div class="auth-other-links">
+      <a href="/adminclick" class="auth-other-btn">
+        <i class="fa-solid fa-shield-halved" style="color:#e53935;"></i>
+        Login as Admin
+      </a>
+      <a href="/vendorlogin" class="auth-other-btn">
+        <i class="fa-solid fa-store" style="color:#f0a500;"></i>
+        Login as Vendor
+      </a>
+    </div>
+
+    <div class="auth-footer-link">
+      New to ApnoraMart? <a href="/customersignup">Create a free account</a>
+    </div>
+  </div>
+</div>
+
+</body>
 </html>

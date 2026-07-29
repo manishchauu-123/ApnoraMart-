@@ -1,168 +1,86 @@
-<!DOCTYPE html>
+{% extends 'ecom/homebase.html' %}
 {% load widget_tweaks %}
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>E-Commerce</title>
-    <style media="screen">
-      body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to right, #b92b27, #1565c0)
-}
 
-.box {
-    width: 500px;
-    padding: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background: #191919;
-    ;
+{% block content %}
+<style>
+  .auth-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg) 0;
+  }
+  .auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--surface-color);
+    border-radius: var(--radius-lg);
+    padding: 40px var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(0,0,0,0.04);
     text-align: center;
-    transition: 0.25s;
-    margin-top: 100px
-}
+  }
+  .auth-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.02em;
+  }
+  .auth-subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: var(--spacing-xl);
+  }
+  .auth-input-group {
+    margin-bottom: var(--spacing-md);
+    text-align: left;
+  }
+  .auth-btn {
+    width: 100%;
+    margin-top: var(--spacing-md);
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .auth-footer {
+    margin-top: var(--spacing-lg);
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .auth-footer a {
+    color: var(--accent-color);
+    font-weight: 600;
+  }
+</style>
 
-.box input[type="text"],
-.box input[type="password"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 10px 10px;
-    width: 250px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s
-}
-
-.box h1 {
-    color: white;
-    text-transform: uppercase;
-    font-weight: 500
-}
-
-.box input[type="text"]:focus,
-.box input[type="password"]:focus {
-    width: 300px;
-    border-color: #2ecc71
-}
-
-.box input[type="submit"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-    cursor: pointer
-}
-
-.box input[type="submit"]:hover {
-    background: #2ecc71
-}
-
-.forgot {
-    text-decoration: underline
-}
-
-ul.social-network {
-    list-style: none;
-    display: inline;
-    margin-left: 0 !important;
-    padding: 0
-}
-
-ul.social-network li {
-    display: inline;
-    margin: 0 5px
-}
-
-.social-network a.icoFacebook:hover {
-    background-color: #3B5998
-}
-
-.social-network a.icoTwitter:hover {
-    background-color: #33ccff
-}
-
-.social-network a.icoGoogle:hover {
-    background-color: #BD3518
-}
-
-.social-network a.icoFacebook:hover i,
-.social-network a.icoTwitter:hover i,
-.social-network a.icoGoogle:hover i {
-    color: #fff
-}
-
-a.socialIcon:hover,
-.socialHoverClass {
-    color: #44BCDD
-}
-
-.social-circle li a {
-    display: inline-block;
-    position: relative;
-    margin: 0 auto 0 auto;
-    border-radius: 50%;
-    text-align: center;
-    width: 50px;
-    height: 50px;
-    font-size: 20px
-}
-
-.social-circle li i {
-    margin: 0;
-    line-height: 50px;
-    text-align: center
-}
-
-.social-circle li a:hover i,
-.triggeredHover {
-    transform: rotate(360deg);
-    transition: all 0.2s
-}
-
-.social-circle i {
-    color: #fff;
-    transition: all 0.8s;
-    transition: all 0.8s
-}
-    </style>
-  </head>
-  <body>
-    {% include "ecom/navbar.html" %}
-    <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <form class="box" method="post">
-                  {% csrf_token %}
-                    <h1>Vendor Login</h1>
-                    <p class="text-muted"> Please enter your login and password!</p>
-                               {% render_field form.username class="form-control" placeholder="Username" %}
-                               {% render_field form.password class="form-control" placeholder="Password" %}
-                     <input type="submit" name="" value="Login" >
-
-                </form>
-            </div>
-        </div>
+<div class="auth-container">
+  <div class="auth-card">
+    <div style="margin-bottom: 16px;">
+      <i class="fa-solid fa-store" style="font-size: 36px; color: var(--warning-color);"></i>
     </div>
+    <h1 class="auth-title">Vendor Portal</h1>
+    <p class="auth-subtitle">Sign in to manage your store</p>
+    
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="auth-input-group">
+        {% render_field form.username class="premium-input" placeholder="Vendor Username" %}
+      </div>
+      
+      <div class="auth-input-group">
+        {% render_field form.password class="premium-input" placeholder="Password" %}
+      </div>
+      
+      <button type="submit" class="btn-premium btn-premium-primary auth-btn" style="background-color: var(--warning-color); color: #000;">
+        Login
+      </button>
+    </form>
+    
+    <div class="auth-footer">
+      Want to sell on ApnoraMart? <a href="/vendor-signup">Register here</a>
+    </div>
+  </div>
 </div>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-{% include "ecom/footer.html" %}
-  </body>
-</html>
+{% endblock content %}
