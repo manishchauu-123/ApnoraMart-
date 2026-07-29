@@ -1,0 +1,174 @@
+{% extends 'ecom/homebase.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+/* 🌟 FLIPKART STYLE UI */
+body {
+    background-color: #f1f3f6;
+    font-family: Roboto, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🚀 CATEGORY SECTION (Image 1 style) */
+.flipkart-categories {
+    display: flex;
+    overflow-x: auto;
+    background: #fff;
+    padding: 12px 10px;
+    gap: 30px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    justify-content: flex-start;
+}
+.flipkart-categories::-webkit-scrollbar { 
+    display: none; 
+}
+.category-item {
+    text-align: center;
+    min-width: 64px;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+.category-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    transition: transform 0.2s;
+}
+.category-item:hover .category-img {
+    transform: scale(1.05);
+}
+.category-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-top: 8px;
+}
+
+/* 🎁 PRODUCT DEALS (Image 2 style) */
+.deal-container {
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    margin: 10px;
+}
+.deal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+.deal-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: #000;
+}
+.view-all-btn {
+    background: #2874f0;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: 500;
+}
+.product-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding-bottom: 15px;
+}
+.product-slider::-webkit-scrollbar { 
+    height: 6px; 
+}
+.product-slider::-webkit-scrollbar-thumb { 
+    background: #d1d1d1; 
+    border-radius: 10px; 
+}
+.product-card {
+    min-width: 200px;
+    max-width: 200px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 15px 10px;
+    background: #fff;
+    transition: box-shadow 0.2s;
+}
+.product-card:hover {
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+.product-card img {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+.product-name {
+    font-size: 14px;
+    color: #212121;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.product-price {
+    font-size: 16px;
+    color: #388e3c;
+    font-weight: bold;
+    margin-top: 8px;
+}
+.add-cart-btn {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 2px;
+    background-color: #ff9f00;
+    border: none;
+    color: white;
+    padding: 8px;
+    font-weight: bold;
+}
+</style>
+
+<div class="flipkart-categories">
+    {% for c in categories %}
+    <a href="/category/{{ c.id }}/" class="category-item">
+        {% if c.image %}
+            <img src="{{ c.image.url }}" class="category-img" alt="{{ c.name }}">
+        {% endif %}
+        <div class="category-name">{{ c.name }}</div>
+    </a>
+    {% endfor %}
+</div>
+
+{% if products %}
+<div class="deal-container">
+    <div class="deal-header">
+        <div class="deal-title">Best of Electronics</div>
+        <a href="#" class="view-all-btn">VIEW ALL</a>
+    </div>
+
+    <div class="product-slider">
+        {% for p in products %}
+        <div class="product-card">
+            <a href="/add-to-cart/{{ p.id }}" style="text-decoration: none;">
+                <img src="{{ p.product_image.url }}" alt="{{ p.name }}">
+                <div class="product-name">{{ p.name }}</div>
+                <div class="product-price">₹ {{ p.price }}</div>
+            </a>
+            {% if request.user.is_authenticated %}
+                <button class="add-cart-btn" onclick="window.location.href='/add-to-cart/{{p.id}}'">🛒 Add to Cart</button>
+            {% else %}
+                <a href="{% url 'customerlogin' %}" class="btn btn-warning" style="width:100%; margin-top:10px; border-radius:2px;">Login to Buy</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

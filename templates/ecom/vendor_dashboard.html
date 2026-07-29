@@ -1,0 +1,117 @@
+{% extends 'ecom/vendor_base.html' %}
+{% block content %}
+
+<h2 class="mb-4"> Vendor Dashboard</h2>
+
+<div class="mb-3">
+    <a href="{% url 'vendor-add-product' %}" class="btn btn-success">
+        ➕ Add Product
+    </a>
+    
+    <button onclick="getExactLocation()" class="btn btn-info ml-2">
+        📍 Set My Shop Location
+    </button>
+</div>
+
+<script>
+function getExactLocation() {
+    if (navigator.geolocation) {
+        // ब्राउज़र से परमिशन मांगना
+        navigator.geolocation.getCurrentPosition(function(position) {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            
+            // कन्फर्मेशन के बाद views.py वाले URL पर डेटा भेजना
+            if(confirm("Kya aap apni dukan ki sateek location set karna chahte hain?")) {
+                window.location.href = `/update-location/?lat=${lat}&lon=${lon}`;
+            }
+        }, function(error) {
+            alert("Location access denied! Please allow location permissions in browser.");
+        });
+    } else {
+        alert("Aapka browser location support nahi karta!");
+    }
+}
+</script>
+
+<div class="card p-3 mb-4">
+    <h4>Your Products</h4>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for p in products %}
+                <tr>
+                    <td>
+                        {% if p.product_image %}
+                            <img src="{{ p.product_image.url }}" width="60" class="rounded">
+                        {% else %}
+                            <img src="https://via.placeholder.com/60?text=No+Img" width="60" class="rounded">
+                        {% endif %}
+                    </td>
+                    <td>{{ p.name }}</td>
+                    <td>₹{{ p.price }}</td>
+                    <td>
+                        <a href="{% url 'update-product' p.id %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'delete-product' p.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No products added yet</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card p-3">
+    <h4>Recent Orders & Delivery Locations</h4>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Product</th>
+                    <th>Mobile</th>
+                    <th>Delivery Address</th>
+                    <th>Action (Check Route)</th>
+                </tr>
+            </thead>
+
+<tbody>
+    {% for order in orders %}
+    <tr>
+        <td class="align-middle">{{ order.product.name }}</td>
+        <td class="align-middle"><a href="tel:{{ order.mobile }}">{{ order.mobile }}</a></td>
+        <td class="align-middle">{{ order.address }}</td>
+        
+        <td class="align-middle">
+            <a href="https://www.google.com/maps/dir/?api=1&destination={{ order.address|urlencode }}" 
+               target="_blank" 
+               class="btn btn-primary btn-sm px-3 shadow-sm">
+               🚀 Start Delivery (Route)
+            </a>
+        </td>
+        </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4" class="text-center">Abhi koi order nahi aaya hai.</td>
+    </tr>
+    {% endfor %}
+</tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

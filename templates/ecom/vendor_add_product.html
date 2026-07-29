@@ -1,0 +1,56 @@
+{% extends 'ecom/vendor_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card p-4">
+        <h3 class="mb-3">➕ Add New Product</h3>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Product Name -->
+            <div class="mb-3">
+                <label class="form-label">Product Name</label>
+                {% render_field productForm.name class="form-control" placeholder="Enter product name" %}
+            </div>
+
+            <!-- Price -->
+            <div class="mb-3">
+                <label class="form-label">Price</label>
+                {% render_field productForm.price class="form-control" placeholder="Enter price" %}
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                {% render_field productForm.description class="form-control" placeholder="Enter description" %}
+            </div>
+
+            <!-- Image -->
+            <div class="mb-3">
+                <label class="form-label">Product Image</label>
+                {% render_field productForm.product_image class="form-control" %}
+            </div>
+             <div class="mb-3">
+                <label class="form-label">Category</label>
+                {% render_field productForm.category class="form-control" %}
+            </div> 
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">
+                     Add Product
+                </button>
+
+                <a href="{% url 'vendor-dashboard' %}" class="btn btn-secondary">
+                    ⬅ Back
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

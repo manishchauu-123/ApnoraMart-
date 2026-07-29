@@ -1,0 +1,68 @@
+{% extends 'ecom/customer_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.panel-title {display: inline;font-weight: bold;}
+.checkbox.pull-right { margin: 0; }
+.pl-ziro { padding-left: 0px; }
+</style>
+
+<br><br>
+
+<marquee>ITS FAKE PAYMENT PAGE. WE DO NOT STORE YOUR DATA</marquee>
+
+<div class="container text-center" style="margin-top:50px;">
+
+    <h3>💳 Payment</h3>
+
+    <h2>₹{{ display_amount }}</h2>
+
+    <button id="pay-btn" class="btn btn-success btn-lg">
+        Pay Now
+    </button>
+
+</div>
+
+<!-- ✅ Razorpay Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    var options = {
+        "key": "{{ razorpay_key }}",
+        "amount": "{{ amount }}",
+        "currency": "INR",
+        "name": "E-Commerce",
+        "description": "Order Payment",
+        "order_id": "{{ payment.id }}",
+        "method": {
+    "upi": true,
+    "card": true,
+    "netbanking": true,
+    "wallet": true
+},
+
+       "handler": function (response){
+    window.location.href = "/payment-success?razorpay_payment_id=" + response.razorpay_payment_id +
+                           "&razorpay_order_id=" + response.razorpay_order_id +
+                           "&razorpay_signature=" + response.razorpay_signature;
+},
+        "theme": {
+            "color": "#28a745"
+        }
+    };
+
+    var rzp = new Razorpay(options);
+
+    document.getElementById('pay-btn').onclick = function(e){
+        rzp.open();
+        e.preventDefault();
+    };
+
+});
+</script>
+
+{% endblock %}

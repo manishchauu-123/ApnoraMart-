@@ -1,0 +1,53 @@
+{% extends 'ecom/homebase.html' %}
+{% block content %}
+
+<h2 style="text-align:center;">🔍 Product Comparison</h2>
+
+<table class="table table-bordered text-center mt-4">
+
+    <tr class="table-dark">
+        <th>Feature</th>
+        {% for p in products %}
+            <th>{{ p.name }}</th>
+        {% endfor %}
+    </tr>
+
+    <tr>
+        <td><b>Image</b></td>
+        {% for p in products %}
+            <td>
+                <img src="{{ p.product_image.url }}" width="120">
+            </td>
+        {% endfor %}
+    </tr>
+
+    <tr>
+        <td><b>Price</b></td>
+        {% for p in products %}
+            <td>₹{{ p.price }}</td>
+        {% endfor %}
+    </tr>
+
+    <tr>
+        <td><b>Description</b></td>
+        {% for p in products %}
+            <td>{{ p.description }}</td>
+        {% endfor %}
+    </tr>
+
+    <tr>
+        <td><b>Seller</b></td>
+        {% for p in products %}
+            <td>
+                {% if p.vendor %}
+                    {{ p.vendor.shop_name }}
+                {% else %}
+                    Admin
+                {% endif %}
+            </td>
+        {% endfor %}
+    </tr>
+
+</table>
+
+{% endblock %}
