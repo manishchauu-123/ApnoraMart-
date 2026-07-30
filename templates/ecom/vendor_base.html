@@ -2,77 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>E-Commerce Vendor Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApnoraMart Seller Panel</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
         body {
-            background: #f4f6f9;
-        }
-
-        .navbar {
-            background: linear-gradient(45deg, #1565c0, #b92b27);
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #334155;
         }
 
         .navbar-brand {
-            font-weight: bold;
+            font-weight: 800;
             color: #fff !important;
         }
 
         .card {
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+            background: #fff;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1) !important;
         }
 
         footer {
-            background: #111;
-            color: white;
+            background: #0f172a;
+            color: #94a3b8;
             text-align: center;
-            padding: 15px;
-            margin-top: 40px;
+            padding: 24px;
+            margin-top: 60px;
+            font-size: 14px;
+            border-top: 1px solid #334155;
         }
     </style>
 </head>
 
 <body>
 
-<!-- 🔵 NAVBAR -->
-<nav class="navbar navbar-expand-lg">
+<!-- 🔵 NAVBAR WITH COLLAPSIBLE TOGGLER -->
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background:linear-gradient(135deg,#2874f0 0%,#1a5cbd 100%);padding:14px 0;">
     <div class="container">
-        <a class="navbar-brand" href="#">Vendor Panel</a>
+        <a class="navbar-brand" href="{% url 'vendor-dashboard' %}" style="font-size:22px;letter-spacing:-0.02em;">
+          Apnora<span style="color:#ffe082;">Mart</span> <span style="font-weight:400;font-size:13px;background:rgba(255,255,255,0.15);padding:3px 10px;border-radius:99px;margin-left:8px;vertical-align:middle;letter-spacing:0.02em;text-transform:uppercase;">Seller</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#vendorNavbar" aria-controls="vendorNavbar" aria-expanded="false" aria-label="Toggle navigation" style="border:none;outline:none;padding:4px;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <div class="collapse navbar-collapse justify-content-end">
-            <ul class="navbar-nav">
+        <div class="collapse navbar-collapse justify-content-end" id="vendorNavbar">
+            <ul class="navbar-nav gap-1 mt-3 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'vendor-dashboard' %}">Dashboard</a>
+                    <a class="nav-link text-white px-3" href="{% url 'vendor-dashboard' %}" style="font-weight:600;font-size:14px;border-radius:8px;transition:background 0.2s;"><i class="fa-solid fa-chart-line" style="margin-right:6px;"></i>Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'vendor-add-product' %}">Add Product</a>
+                    <a class="nav-link text-white px-3" href="{% url 'vendor-add-product' %}" style="font-weight:600;font-size:14px;border-radius:8px;transition:background 0.2s;"><i class="fa-solid fa-plus" style="margin-right:6px;"></i>Add Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'logout' %}">Logout</a>
+                    <a class="nav-link text-white px-3" href="{% url 'logout' %}" style="font-weight:600;font-size:14px;border-radius:8px;transition:background 0.2s;background:rgba(255,255,255,0.12);"><i class="fa-solid fa-right-from-bracket" style="margin-right:6px;"></i>Logout</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="container mt-4">
+<div class="container mt-5" style="min-height:70vh;">
     {% block content %}
     {% endblock %}
 </div>
 
-<br>
-<br>
-<br>
 <footer>
-    <p>© 2026 E-Commerce Vendor Panel | Made in India 🇮🇳</p>
+    <p style="margin:0;">© 2026 ApnoraMart Seller Panel. All rights reserved.</p>
 </footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
