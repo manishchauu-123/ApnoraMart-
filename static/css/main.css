@@ -1259,6 +1259,35 @@ a   { color: inherit; text-decoration: none; }
     border-radius: 12px !important;
     box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
   }
+  
+  /* Mobile bottom nav larger cart icon and red badge */
+  .pm-mobile-nav-item[href="/cart"] {
+    position: relative !important;
+  }
+  .pm-mobile-nav-item[href="/cart"] i {
+    font-size: 24px !important;
+    color: #212121 !important;
+  }
+  .pm-mobile-cart-badge {
+    position: absolute !important;
+    top: 2px !important;
+    right: 18px !important;
+    background: #ef4444 !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+    min-width: 17px !important;
+    height: 17px !important;
+    font-size: 9.5px !important;
+    font-weight: 800 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1.5px solid #fff !important;
+    padding: 0 2px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15) !important;
+    line-height: 1 !important;
+    z-index: 10 !important;
+  }
 }
 
 @media (min-width: 577px) and (max-width: 991px) {
