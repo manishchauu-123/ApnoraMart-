@@ -1,94 +1,103 @@
 {% extends 'ecom/customer_base.html' %}
 {% load widget_tweaks %}
 {% block content %}
+<div class="container" style="max-width:700px;margin-top:40px;margin-bottom:60px;padding:0 16px;">
+  <div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);border:1px solid #e2e8f0;" class="animate-fade-in">
+    
+    <!-- Form Header Banner -->
+    <div style="padding:28px;background:linear-gradient(135deg, #0072ff 0%, #8811c5 100%);color:#fff;text-align:center;">
+      <h2 style="font-weight:800;font-size:22px;letter-spacing:-0.01em;margin:0;text-transform:uppercase;">Edit Your Profile</h2>
+      <p style="margin:6px 0 0 0;font-size:13px;color:rgba(255,255,255,0.8);font-weight:500;">Update your account info and delivery details</p>
+    </div>
 
-<head>
-  <style media="screen">
-    body {
-      background-color:#ffffff;
-    }
-    a:link {
-      text-decoration: none;
-    }
-
-    .note {
-      text-align: center;
-      height: 80px;
-      background: -webkit-linear-gradient(left, #0072ff, #8811c5);
-      color: #fff;
-      font-weight: bold;
-      line-height: 80px;
-    }
-
-    .form-content {
-      padding: 5%;
-      border: 1px solid #ced4da;
-      margin-bottom: 2%;
-    }
-
-    .form-control {
-      border-radius: 1.5rem;
-    }
-
-    .btnSubmit {
-      border: none;
-      border-radius: 1.5rem;
-      padding: 1%;
-      width: 20%;
-      cursor: pointer;
-      background: #0062cc;
-      color: #fff;
-    }
-
-    .menu{
-      top: 50px;
-    }
-  </style>
-
-
-</head>
-<br><br><br><br><br><br>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <div class="container register-form">
-    <div class="form">
-      <div class="note">
-        <p>EDIT PROFILE</p>
-      </div>
-      <div class="form-content">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
-            </div>
-            <div class="form-group">
-              {% render_field userForm.username class="form-control" placeholder="Username" %}
-            </div>
-            <div class="form-group">
-              {% render_field customerForm.mobile class="form-control" placeholder="Mobile" %}
-            </div>
-            <div class="form-group">
-
-
-			<input type="file" class="form-control" name="profile_pic">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
-            </div>
-            <div class="form-group">
-              {% render_field userForm.password class="form-control" placeholder="Password" %}
-            </div>
-            <div class="form-group">
-              {% render_field customerForm.address class="form-control" placeholder="Address" %}
-            </div>
-
+    <!-- Form Container -->
+    <form method="post" enctype="multipart/form-data" style="padding:32px;">
+      {% csrf_token %}
+      
+      <div class="row g-4">
+        
+        <!-- First Name -->
+        <div class="col-md-6">
+          <label style="display:block;font-size:12px;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.02em;">First Name</label>
+          <div style="position:relative;">
+            {% render_field userForm.first_name class="form-control" placeholder="Enter first name" style="padding:10px 14px;border-radius:8px;border:1.5px solid #cbd5e1;font-size:14px;width:100%;outline:none;transition:border-color 0.2s;" %}
           </div>
         </div>
-        <button type="submit" class="btnSubmit">Edit</button>
+
+        <!-- Last Name -->
+        <div class="col-md-6">
+          <label style="display:block;font-size:12px;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.02em;">Last Name</label>
+          <div style="position:relative;">
+            {% render_field userForm.last_name class="form-control" placeholder="Enter last name" style="padding:10px 14px;border-radius:8px;border:1.5px solid #cbd5e1;font-size:14px;width:100%;outline:none;transition:border-color 0.2s;" %}
+          </div>
+        </div>
+
+        <!-- Username -->
+        <div class="col-md-6">
+          <label style="display:block;font-size:12px;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.02em;">Username</label>
+          <div style="position:relative;">
+            {% render_field userForm.username class="form-control" placeholder="Enter username" style="padding:10px 14px;border-radius:8px;border:1.5px solid #cbd5e1;font-size:14px;width:100%;outline:none;transition:border-color 0.2s;" %}
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="col-md-6">
+          <label style="display:block;font-size:12px;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.02em;">Password (Change if needed)</label>
+          <div style="position:relative;">
+            {% render_field userForm.password class="form-control" placeholder="Enter new password" style="padding:10px 14px;border-radius:8px;border:1.5px solid #cbd5e1;font-size:14px;width:100%;outline:none;transition:border-color 0.2s;" %}
+          </div>
+        </div>
+
+        <!-- Mobile -->
+        <div class="col-md-6">
+          <label style="display:block;font-size:12px;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.02em;">Mobile Number</label>
+          <div style="position:relative;">
+            {% render_field customerForm.mobile class="form-control" placeholder="Enter mobile number" style="padding:10px 14px;border-radius:8px;border:1.5px solid #cbd5e1;font-size:14px;width:100%;outline:none;transition:border-color 0.2s;" %}
+          </div>
+        </div>
+
+        <!-- Profile Picture -->
+        <div class="col-md-6">
+          <label style="display:block;font-size:12px;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.02em;">Profile Picture</label>
+          <div style="position:relative;">
+            <input type="file" class="form-control" name="profile_pic" style="padding:8px 12px;border-radius:8px;border:1.5px solid #cbd5e1;font-size:14px;width:100%;outline:none;background:#f8fafc;">
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="col-12">
+          <label style="display:block;font-size:12px;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.02em;">Delivery Address</label>
+          <div style="position:relative;">
+            {% render_field customerForm.address class="form-control" placeholder="Enter complete address" style="padding:10px 14px;border-radius:8px;border:1.5px solid #cbd5e1;font-size:14px;width:100%;outline:none;transition:border-color 0.2s;" %}
+          </div>
+        </div>
+
       </div>
-    </div>
+
+      <!-- Action buttons -->
+      <div style="margin-top:32px;display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;">
+        <a href="/my-profile" class="glowing-btn" style="background:#64748b;color:#fff;font-weight:800;padding:12px 28px;border-radius:10px;font-size:15px;text-decoration:none;display:inline-block;box-shadow:none;">
+          Cancel
+        </a>
+        <button type="submit" class="glowing-btn" style="background:#0072ff;color:#fff;border:none;font-weight:800;padding:12px 36px;border-radius:10px;font-size:15px;cursor:pointer;box-shadow:0 4px 12px rgba(0,114,255,0.25);">
+          Save Changes
+        </button>
+      </div>
+
+    </form>
   </div>
-</form>
+</div>
+
+<script>
+  document.querySelectorAll('.form-control').forEach(function(el) {
+    el.addEventListener('focus', function() {
+      this.style.borderColor = '#0072ff';
+      this.style.boxShadow = '0 0 0 3px rgba(0, 114, 255, 0.15)';
+    });
+    el.addEventListener('blur', function() {
+      this.style.borderColor = '#cbd5e1';
+      this.style.boxShadow = 'none';
+    });
+  });
+</script>
 {% endblock content %}

@@ -1,72 +1,60 @@
 {% extends 'ecom/customer_base.html' %}
 {% load static %}
 {% block content %}
+<div class="container" style="max-width:600px;margin-top:40px;margin-bottom:60px;padding:0 16px;">
+  <div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);border:1px solid #e2e8f0;" class="animate-fade-in">
+    <!-- Top banner background -->
+    <div style="height:120px;background:linear-gradient(135deg, #2874f0 0%, #0d1b3e 100%);"></div>
+    
+    <!-- Profile picture container (offset overlapping the banner) -->
+    <div style="text-align:center;margin-top:-60px;position:relative;z-index:2;margin-bottom:20px;">
+      <div style="width:120px;height:120px;border-radius:50%;background:#fff;padding:6px;margin:0 auto;box-shadow:0 8px 20px rgba(0,0,0,0.1);display:inline-flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid #e2e8f0;">
+        {% if customer.profile_pic %}
+          <img src="{{ customer.profile_pic.url }}" alt="profile pic" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+        {% else %}
+          <div style="width:100%;height:100%;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:32px;">
+            <i class="fa-solid fa-user"></i>
+          </div>
+        {% endif %}
+      </div>
+      <h3 style="font-weight:800;color:#0f172a;margin-top:16px;margin-bottom:4px;font-size:22px;letter-spacing:-0.01em;">
+        {% if request.user.first_name %}{{ request.user.first_name }} {{ request.user.last_name }}{% else %}{{ request.user.username }}{% endif %}
+      </h3>
+      <span style="background:#e0f2fe;color:#0369a1;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:0.04em;">Customer Profile</span>
+    </div>
 
-
-<style media="screen">
-  body {
-    background-color:#8c9eff;
-  }
-  .button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: #f4511e;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 28px;
-  padding: 20px;
-  width: 200px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-  }
-
-  .button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-  }
-
-  .button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-  }
-
-  .button:hover span {
-  padding-right: 25px;
-  }
-
-  .button:hover span:after {
-  opacity: 1;
-  right: 0;
-  }
-
-
-</style>
-<br><br><br>
-<div style="padding-left:300px;" class="container">
-
-        <div class="col-sm-2 col-md-2">
-            <img src="{% static customer.profile_pic.url %}"   alt="profile pic" class="img-rounded img-responsive" />
+    <!-- Detail rows -->
+    <div style="padding:0 32px 32px 32px;">
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:28px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;align-items:center;gap:12px;border-bottom:1px solid #e2e8f0;padding-bottom:12px;">
+          <span style="font-size:18px;color:#2874f0;width:24px;text-align:center;"><i class="fa-solid fa-circle-user"></i></span>
+          <div>
+            <div style="font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Username</div>
+            <div style="font-size:14.5px;color:#334155;font-weight:700;">{{ request.user.username }}</div>
+          </div>
         </div>
-        <div class="col-sm-4 col-md-4">
-            <blockquote>
-                <p>{{request.user}}</p> <small><cite title="Source Title">{{customer.address}}  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
-            </blockquote>
-            <p> <i class="glyphicon glyphicon-phone"></i> {{customer.mobile}}
-            </p>
+        <div style="display:flex;align-items:center;gap:12px;border-bottom:1px solid #e2e8f0;padding-bottom:12px;">
+          <span style="font-size:18px;color:#2874f0;width:24px;text-align:center;"><i class="fa-solid fa-phone"></i></span>
+          <div>
+            <div style="font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Mobile Number</div>
+            <div style="font-size:14.5px;color:#334155;font-weight:700;">{{ customer.mobile }}</div>
+          </div>
         </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:18px;color:#2874f0;width:24px;text-align:center;"><i class="fa-solid fa-location-dot"></i></span>
+          <div>
+            <div style="font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Delivery Address</div>
+            <div style="font-size:14.5px;color:#334155;font-weight:700;">{{ customer.address }}</div>
+          </div>
+        </div>
+      </div>
 
+      <div style="text-align:center;">
+        <a href="/edit-profile" class="glowing-btn" style="background:#2874f0;color:#fff;font-weight:800;padding:12px 36px;border-radius:10px;font-size:15px;text-decoration:none;display:inline-block;box-shadow:0 4px 12px rgba(40,116,240,0.25);">
+          <i class="fa-solid fa-user-pen" style="margin-right:8px;"></i> Edit Profile
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
-<br>
-<div style="text-align: center;">
-  <a href="/edit-profile"><button class="button" ><span>Edit Profile </span></button></a>
-</div>
-<br><br><br><br><br><br>
 {% endblock content %}
