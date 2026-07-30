@@ -252,8 +252,8 @@
       const cityInput = document.querySelector('input[name="city"]');
       
       if (stateInput && cityInput) {
-        // Indian States to Cities Mapping
-        const stateCityMap = {
+        // Fallback Mapping
+        const fallbackMap = {
           "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Tirupati"],
           "Assam": ["Guwahati", "Dibrugarh", "Silchar", "Tezpur", "Jorhat"],
           "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Darbhanga"],
@@ -273,7 +273,9 @@
           "Uttar Pradesh": ["Lucknow", "Kanpur", "Noida", "Ghaziabad", "Varanasi", "Agra", "Prayagraj", "Meerut", "Gorakhpur", "Bareilly", "Aligarh", "Moradabad"],
           "West Bengal": ["Kolkata", "Howrah", "Durgapur", "Siliguri", "Asansol"]
         };
-        
+
+        let indianData = null;
+
         // 1. Create State Dropdown
         const stateSelect = document.createElement("select");
         stateSelect.name = "state";
@@ -281,23 +283,10 @@
         stateSelect.className = stateInput.className;
         stateSelect.required = true;
         
-        // Add default option
         const defaultStateOpt = document.createElement("option");
         defaultStateOpt.value = "";
         defaultStateOpt.textContent = "Select State";
         stateSelect.appendChild(defaultStateOpt);
-        
-        // Populate states
-        Object.keys(stateCityMap).forEach(state => {
-          const opt = document.createElement("option");
-          opt.value = state;
-          opt.textContent = state;
-          if (stateInput.value === state) opt.selected = true;
-          stateSelect.appendChild(opt);
-        });
-        
-        // Replace state text input with select
-        stateInput.parentNode.replaceChild(stateSelect, stateInput);
         
         // 2. Create City Dropdown
         const citySelect = document.createElement("select");
@@ -306,35 +295,88 @@
         citySelect.className = cityInput.className;
         citySelect.required = true;
         
-        // Replace city text input with select
+        const defaultCityOpt = document.createElement("option");
+        defaultCityOpt.value = "";
+        defaultCityOpt.textContent = "Choose State First";
+        citySelect.appendChild(defaultCityOpt);
+
+        // Replace inputs
+        stateInput.parentNode.replaceChild(stateSelect, stateInput);
         cityInput.parentNode.replaceChild(citySelect, cityInput);
-        
-        // Function to update cities based on selected state
-        function updateCities(selectedState, currentCityValue = "") {
+
+        function loadFallbackStates() {
+          stateSelect.innerHTML = '<option value="">Select State</option>';
+          Object.keys(fallbackMap).forEach(state => {
+            const opt = document.createElement("option");
+            opt.value = state;
+            opt.textContent = state;
+            stateSelect.appendChild(opt);
+          });
+        }
+
+        function updateFallbackCities(selectedState) {
+          citySelect.innerHTML = "";
+          const defaultCityOpt = document.createElement("option");
+          defaultCityOpt.value = "";
+          defaultCityOpt.textContent = selectedState ? "Select City" : "Choose State First";
+          citySelect.appendChild(defaultCityOpt);
+          
+          if (selectedState && fallbackMap[selectedState]) {
+            fallbackMap[selectedState].forEach(city => {
+              const opt = document.createElement("option");
+              opt.value = city;
+              opt.textContent = city;
+              citySelect.appendChild(opt);
+            });
+          }
+        }
+
+        // Fetch API
+        fetch("https://raw.githubusercontent.com/sab99r/Indian-States-And-Districts/master/states-and-districts.json")
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.states) {
+              indianData = data.states;
+              stateSelect.innerHTML = '<option value="">Select State</option>';
+              indianData.forEach(item => {
+                const opt = document.createElement("option");
+                opt.value = item.state;
+                opt.textContent = item.state;
+                stateSelect.appendChild(opt);
+              });
+            } else {
+              loadFallbackStates();
+            }
+          })
+          .catch(err => {
+            console.warn("Failed to fetch states API, using fallback data:", err);
+            loadFallbackStates();
+          });
+
+        stateSelect.addEventListener("change", function() {
+          const selectedState = this.value;
           citySelect.innerHTML = "";
           
           const defaultCityOpt = document.createElement("option");
           defaultCityOpt.value = "";
           defaultCityOpt.textContent = selectedState ? "Select City" : "Choose State First";
           citySelect.appendChild(defaultCityOpt);
-          
-          if (selectedState && stateCityMap[selectedState]) {
-            stateCityMap[selectedState].forEach(city => {
-              const opt = document.createElement("option");
-              opt.value = city;
-              opt.textContent = city;
-              if (currentCityValue === city) opt.selected = true;
-              citySelect.appendChild(opt);
-            });
+
+          if (selectedState) {
+            if (indianData) {
+              const found = indianData.find(item => item.state === selectedState);
+              if (found && found.districts) {
+                found.districts.forEach(dist => {
+                  const opt = document.createElement("option");
+                  opt.value = dist;
+                  opt.textContent = dist;
+                  citySelect.appendChild(opt);
+                });
+                return;
+              }
+            }
+            updateFallbackCities(selectedState);
           }
-        }
-        
-        // Initial population
-        updateCities(stateSelect.value, cityInput.value);
-        
-        // Trigger on change
-        stateSelect.addEventListener("change", function() {
-          updateCities(this.value);
         });
       }
 
