@@ -1,133 +1,103 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApnoraMart Admin Panel</title>
 
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <style type="text/css">
-    .bs-example {
-      margin: 0px;
+    <!-- FontAwesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    }
-    .navbar-brand {
-      font-size: 20px;
-      font-family: sans-serif;
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #334155;
+            padding-top: 80px; /* Offset fixed header */
+        }
 
-    }
+        .navbar-brand {
+            font-weight: 800;
+            color: #fff !important;
+        }
 
-        /*---------------------------------------
-           Social section
-        -----------------------------------------*/
+        .card {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+            background: #fff;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1) !important;
+        }
+
         footer {
-          padding: 0px 0px 0px 0px;
-          background-color: black;
-          margin: 0px;
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 24px;
+            margin-top: 60px;
+            font-size: 14px;
+            border-top: 1px solid #334155;
         }
-
-
-        #ftr {
-
-          padding: 20px;
-        }
-
-        .fa {
-
-          font-size: 23px;
-          width: 60px;
-          text-align: center;
-          text-decoration: none;
-          margin: 5px 2px;
-          border-radius: 50%;
-        }
-
-        .fa:hover {
-          opacity: 0.5;
-          text-decoration: none;
-        }
-
-        .fa-facebook {
-          background: #3B5998;
-          color: white;
-          margin-top: 30px;
-        }
-
-        .fa-whatsapp {
-          background: #25d366;
-          color: white;
-        }
-
-        .fa-twitter {
-          background: #55ACEE;
-          color: white;
-        }
-
-        .fa-instagram {
-          background: #125688;
-          color: white;
-        }
-
-        p {
-          text-align: center;
-
-        }
-  </style>
+    </style>
 </head>
 
 <body>
 
-
-
-  <div class="bs-example">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background:#337AB7;">
-      <a href="/" class="navbar-brand">Ecommerce</a>
-      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-        <div class="navbar-nav">
-          <a href="/view-customer" class="nav-item nav-link">Customer</a>
-          <a href="/admin-view-booking" class="nav-item nav-link">Booking</a>
-          <a href="/admin-products" class="nav-item nav-link">Products</a>
-          <a href="/view-feedback" class="nav-item nav-link">Feedback</a>
-        </div>
-
-        <div class="navbar-nav navbar-right">
-          <a href="{% url 'logout' %}">LOGOUT</a>
-        </div>
-
-      </div>
-    </nav>
-  </div>
-
-  <!-- content start-->
-  {% block content %}
-
-  {% endblock content %}
-  <!-- content end-->
-<br><br><br><br><br><br><br><br>
-  <footer>
-    <p>
-      <a id="ftr" href="#" class="fa fa-facebook"></a>
-      <a id="ftr" href="#" class="fa fa-whatsapp"></a>
-      <a id="ftr" href="#"></a>
-      <a id="ftr" href="#" class="fa fa-twitter"></a>
-    </p>
-
-    <br>
+<!-- 🔵 NAVBAR WITH COLLAPSIBLE TOGGLER -->
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top" style="background:linear-gradient(135deg,#2874f0 0%,#1a5cbd 100%);padding:14px 0;">
     <div class="container">
-      <div class="row">
-        <div class="col-md-12 col-sm-12">
-          <div style="color:#ffffff;" class="wow fadeInUp footer-copyright">
-            <p>Made in India <br>
-              Copyright &copy; 2020 E-Commerce </p>
-          </div>
+        <a class="navbar-brand" href="/admin-dashboard" style="font-size:22px;letter-spacing:-0.02em;">
+          Apnora<span style="color:#ffe082;">Mart</span> <span style="font-weight:400;font-size:13px;background:rgba(255,255,255,0.15);padding:3px 10px;border-radius:99px;margin-left:8px;vertical-align:middle;letter-spacing:0.02em;text-transform:uppercase;">Admin</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation" style="border:none;outline:none;padding:4px;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="adminNavbar">
+            <ul class="navbar-nav gap-1 mt-3 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-white px-3" href="/admin-dashboard" style="font-weight:600;font-size:14px;border-radius:8px;transition:background 0.2s;"><i class="fa-solid fa-chart-line" style="margin-right:6px;"></i>Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white px-3" href="/view-customer" style="font-weight:600;font-size:14px;border-radius:8px;transition:background 0.2s;"><i class="fa-solid fa-users" style="margin-right:6px;"></i>Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white px-3" href="/admin-view-booking" style="font-weight:600;font-size:14px;border-radius:8px;transition:background 0.2s;"><i class="fa-solid fa-cart-shopping" style="margin-right:6px;"></i>Booking</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white px-3" href="/admin-products" style="font-weight:600;font-size:14px;border-radius:8px;transition:background 0.2s;"><i class="fa-solid fa-boxes-stacked" style="margin-right:6px;"></i>Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white px-3" href="/view-feedback" style="font-weight:600;font-size:14px;border-radius:8px;transition:background 0.2s;"><i class="fa-solid fa-comment-dots" style="margin-right:6px;"></i>Feedback</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white px-3" href="{% url 'logout' %}" style="font-weight:600;font-size:14px;border-radius:8px;transition:background 0.2s;background:rgba(255,255,255,0.12);"><i class="fa-solid fa-right-from-bracket" style="margin-right:6px;"></i>Logout</a>
+                </li>
+            </ul>
         </div>
-      </div>
     </div>
-  </footer>
+</nav>
+
+<div class="container mt-4" style="min-height:75vh;">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<footer>
+    <p style="margin:0;">© 2026 ApnoraMart Admin Panel. All rights reserved.</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
