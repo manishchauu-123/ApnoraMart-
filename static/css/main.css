@@ -392,7 +392,8 @@ a   { color: inherit; text-decoration: none; }
   color: var(--text-800, #1e293b);
   text-align: center;
   line-height: 1.25;
-  white-space: nowrap;
+  white-space: normal;
+  max-width: 100px;
   transition: color 0.2s ease;
 }
 .pm-cat-chip:hover .pm-cat-label {
@@ -815,6 +816,7 @@ a   { color: inherit; text-decoration: none; }
   }
   .pm-cat-label {
     font-size: 11px !important;
+    max-width: 60px !important;
   }
 
   /* Hero Slider Widescreen size reduction on mobile */
