@@ -128,7 +128,7 @@ def home(request):
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
         if product_ids:
-            product_count_in_cart = len(set(product_ids.split('|')))
+            product_count_in_cart = len(product_ids.split('|'))
     
     if request.user.is_authenticated:
         return redirect('afterlogin')
@@ -151,7 +151,7 @@ def search_view(request):
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
         if product_ids:
-            product_count_in_cart = len(set(product_ids.split('|')))
+            product_count_in_cart = len(product_ids.split('|'))
 
     word = "Searched Result :"
     if request.user.is_authenticated:
@@ -193,66 +193,79 @@ def send_feedback_view(request):
 
 # --- 5. CART SYSTEM ---
 def add_to_cart_view(request, pk):
-    products = models.Product.objects.all()
-    product_count_in_cart = 1
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        if product_ids:
-            product_count_in_cart = len(set(product_ids.split('|'))) + 1
-
-    response = render(request, 'ecom/index.html', {'products': products, 'product_count_in_cart': product_count_in_cart})
-
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        if product_ids == "":
-            product_ids = str(pk)
-        else:
-            product_ids = product_ids + "|" + str(pk)
-        response.set_cookie('product_ids', product_ids)
+    product_ids = request.COOKIES.get('product_ids', '')
+    if product_ids == "":
+        product_ids = str(pk)
     else:
-        response.set_cookie('product_ids', pk)
+        product_ids = product_ids + "|" + str(pk)
 
+    buy_now = request.GET.get('buy_now') == 'true'
+    if buy_now:
+        response = redirect('customer-address') if request.user.is_authenticated else redirect('customerlogin')
+    else:
+        response = redirect(request.META.get('HTTP_REFERER', 'customer-home'))
+
+    response.set_cookie('product_ids', product_ids)
     product = models.Product.objects.get(id=pk)
     messages.info(request, product.name + ' added to cart successfully!')
     return response
 
-def cart_view(request):
-    product_count_in_cart = 0
-    products = None
-    total = 0
+def decrease_quantity_view(request, pk):
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
         if product_ids != "":
-            product_id_in_cart = product_ids.split('|')
-            product_count_in_cart = len(set(product_id_in_cart))
-            products = models.Product.objects.filter(id__in=product_id_in_cart)
-            for p in products:
-                total += p.price
-    return render(request, 'ecom/cart.html', {'products': products, 'total': total, 'product_count_in_cart': product_count_in_cart})
-
-def remove_from_cart_view(request, pk):
-    product_count_in_cart = 0
-    total = 0
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        if product_ids != "":
-            product_id_in_cart = product_ids.split('|')
-            product_id_in_cart = list(set(product_id_in_cart))
-            if str(pk) in product_id_in_cart:
-                product_id_in_cart.remove(str(pk))
-            products = models.Product.objects.filter(id__in=product_id_in_cart)
-            for p in products:
-                total += p.price
-
-            value = "|".join(product_id_in_cart)
-            product_count_in_cart = len(product_id_in_cart)
-            response = render(request, 'ecom/cart.html', {'products': products, 'total': total, 'product_count_in_cart': product_count_in_cart})
+            product_id_list = product_ids.split('|')
+            if str(pk) in product_id_list:
+                product_id_list.remove(str(pk))
+            
+            value = "|".join(product_id_list)
+            response = redirect('cart')
             if value == "":
                 response.delete_cookie('product_ids')
             else:
                 response.set_cookie('product_ids', value)
             return response
     return redirect('cart')
+
+def remove_from_cart_view(request, pk):
+    if 'product_ids' in request.COOKIES:
+        product_ids = request.COOKIES['product_ids']
+        if product_ids != "":
+            product_id_list = product_ids.split('|')
+            product_id_list = [pid for pid in product_id_list if pid != str(pk)]
+            
+            value = "|".join(product_id_list)
+            response = redirect('cart')
+            if value == "":
+                response.delete_cookie('product_ids')
+            else:
+                response.set_cookie('product_ids', value)
+            return response
+    return redirect('cart')
+
+def cart_view(request):
+    product_count_in_cart = 0
+    products = []
+    total = 0
+    if 'product_ids' in request.COOKIES:
+        product_ids = request.COOKIES['product_ids']
+        if product_ids != "":
+            product_id_list = product_ids.split('|')
+            product_count_in_cart = len(product_id_list)
+            
+            from collections import Counter
+            counts = Counter(product_id_list)
+            
+            for prod_id, qty in counts.items():
+                try:
+                    product = models.Product.objects.get(id=int(prod_id))
+                    product.quantity = qty
+                    product.subtotal = product.price * qty
+                    total += product.subtotal
+                    products.append(product)
+                except models.Product.DoesNotExist:
+                    pass
+    return render(request, 'ecom/cart.html', {'products': products, 'total': total, 'product_count_in_cart': product_count_in_cart})
 
 # --- 6. CUSTOMER DASHBOARD ---
 @login_required(login_url='customerlogin')
@@ -264,7 +277,7 @@ def customer_home_view(request):
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
         if product_ids:
-            product_count_in_cart = len(set(product_ids.split('|')))
+            product_count_in_cart = len(product_ids.split('|'))
     return render(request, 'ecom/customer_home.html', {
         'products': products,
         'categories': categories,
@@ -279,7 +292,7 @@ def customer_address_view(request):
         product_ids = request.COOKIES['product_ids']
         if product_ids != "":
             product_in_cart = True
-            product_count_in_cart = len(set(product_ids.split('|')))
+            product_count_in_cart = len(product_ids.split('|'))
 
     addressForm = forms.AddressForm()
     if request.method == 'POST':
@@ -303,9 +316,12 @@ def payment_view(request):
         product_ids = request.COOKIES['product_ids']
         if product_ids:
             ids = product_ids.split('|')
-            products = models.Product.objects.filter(id__in=ids)
-            for p in products:
-                total += p.price
+            for prod_id in ids:
+                try:
+                    p = models.Product.objects.get(id=int(prod_id))
+                    total += p.price
+                except models.Product.DoesNotExist:
+                    pass
 
     if total == 0:
         total = 500  
@@ -332,16 +348,18 @@ def payment_success_view(request):
     payment_id = request.GET.get('razorpay_payment_id')
     order_id = request.GET.get('razorpay_order_id')
     signature = request.GET.get('razorpay_signature')
+    direct_cod = request.GET.get('direct_cod') == 'true'
 
-    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-    try:
-        client.utility.verify_payment_signature({
-            'razorpay_payment_id': payment_id,
-            'razorpay_order_id': order_id,
-            'razorpay_signature': signature
-        })
-    except:
-        return HttpResponse("❌ Payment Failed")
+    if not direct_cod:
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        try:
+            client.utility.verify_payment_signature({
+                'razorpay_payment_id': payment_id,
+                'razorpay_order_id': order_id,
+                'razorpay_signature': signature
+            })
+        except:
+            return HttpResponse("❌ Payment Failed")
 
     customer = models.Customer.objects.get(user_id=request.user.id)
     email = request.COOKIES.get('email')
@@ -351,16 +369,19 @@ def payment_success_view(request):
 
     if product_ids:
         ids = product_ids.split('|')
-        products = models.Product.objects.filter(id__in=ids)
-        for product in products:
-            models.Orders.objects.create(
-                customer=customer,
-                product=product,
-                status='Paid',
-                email=email,
-                mobile=mobile,
-                address=address
-            )
+        for prod_id in ids:
+            try:
+                product = models.Product.objects.get(id=int(prod_id))
+                models.Orders.objects.create(
+                    customer=customer,
+                    product=product,
+                    status='Pending',
+                    email=email,
+                    mobile=mobile,
+                    address=address
+                )
+            except models.Product.DoesNotExist:
+                pass
 
     response = render(request, 'ecom/payment_success.html')
     response.delete_cookie('product_ids')

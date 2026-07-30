@@ -1,73 +1,359 @@
-{% extends 'ecom/homebase.html' %}
+{% load static %}
 {% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login – ApnoraMart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      background: #f4f5f7;
+      -webkit-font-smoothing: antialiased;
+    }
 
-{% block content %}
-<style>
-  .auth-container {
-    min-height: calc(100vh - 200px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-lg) 0;
-  }
-  .auth-card {
-    width: 100%;
-    max-width: 420px;
-    background: var(--surface-color);
-    border-radius: var(--radius-lg);
-    padding: 40px var(--spacing-lg);
-    box-shadow: var(--shadow-md);
-    border: 1px solid rgba(0,0,0,0.04);
-    text-align: center;
-  }
-  .auth-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text-main);
-    margin-bottom: var(--spacing-xs);
-    letter-spacing: -0.02em;
-  }
-  .auth-subtitle {
-    color: var(--text-muted);
-    font-size: 15px;
-    margin-bottom: var(--spacing-xl);
-  }
-  .auth-input-group {
-    margin-bottom: var(--spacing-md);
-    text-align: left;
-  }
-  .auth-btn {
-    width: 100%;
-    margin-top: var(--spacing-md);
-    padding: 14px;
-    font-size: 16px;
-    font-weight: 600;
-  }
-</style>
+    /* ── LEFT PANEL ── */
+    .auth-left {
+      display: none;
+      flex: 1;
+      background: linear-gradient(145deg, #1a092b 0%, #4a0e2e 40%, #800d28 75%, #b31238 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 48px;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media(min-width:900px){ .auth-left { display: flex; } }
 
-<div class="auth-container">
-  <div class="auth-card">
-    <div style="margin-bottom: 20px;">
-      <i class="fa-solid fa-shield-halved" style="font-size: 40px; color: var(--danger-color);"></i>
+    .auth-left::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.06);
+    }
+    .auth-left::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.05);
+    }
+
+    .auth-brand {
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.03em;
+    }
+    .auth-brand span { color: #ff80ab; }
+
+    .auth-hero-text {
+      position: relative;
+      z-index: 2;
+    }
+    .auth-hero-text h1 {
+      font-size: 40px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      letter-spacing: -.03em;
+      margin-bottom: 16px;
+    }
+    .auth-hero-text p {
+      font-size: 15px;
+      color: rgba(255,255,255,.75);
+      line-height: 1.7;
+      max-width: 360px;
+    }
+
+    .auth-perks {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .auth-perk {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 12px;
+      padding: 14px 18px;
+    }
+    .auth-perk-icon {
+      font-size: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.15);
+      color: #ff80ab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .auth-perk-title { font-size: 14px; font-weight: 700; color: #fff; }
+    .auth-perk-sub   { font-size: 12px; color: rgba(255,255,255,.7); }
+
+    /* ── RIGHT PANEL ── */
+    .auth-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+    }
+    @media(min-width:900px){
+      .auth-right { flex: 0 0 460px; max-width: 460px; }
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 36px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    .auth-mobile-brand {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 800;
+      color: #cc0c39;
+      letter-spacing: -.03em;
+      margin-bottom: 28px;
+    }
+    .auth-mobile-brand span { color: #111; }
+    @media(min-width:900px){ .auth-mobile-brand { display: none; } }
+
+    .auth-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffebee;
+      color: #c62828;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+    }
+
+    .auth-card-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0d0d0d;
+      letter-spacing: -.03em;
+      margin-bottom: 6px;
+    }
+    .auth-card-sub {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 28px;
+    }
+
+    .auth-field { margin-bottom: 16px; }
+    .auth-field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 6px;
+    }
+    .auth-input-wrap { position: relative; }
+    .auth-input-icon {
+      position: absolute;
+      left: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: #bbb;
+      font-size: 15px;
+      pointer-events: none;
+      transition: color .2s;
+    }
+    .auth-input {
+      width: 100%;
+      padding: 13px 16px 13px 44px;
+      border: 1.5px solid #e8e8e8;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: #111;
+      background: #fafafa;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+    .auth-input:focus {
+      border-color: #cc0c39;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(204,12,57,.12);
+    }
+    .auth-input-wrap:focus-within .auth-input-icon { color: #cc0c39; }
+
+    .auth-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #cc0c39 0%, #a0092d 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 16px rgba(204,12,57,.35);
+      letter-spacing: .01em;
+    }
+    .auth-submit:hover {
+      background: linear-gradient(135deg, #a0092d 0%, #7b0520 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(204,12,57,.45);
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: ''; flex: 1; height: 1px; background: #eee;
+    }
+    .auth-divider span { font-size: 12px; color: #bbb; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+
+    .role-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 11px;
+      border: 1.5px solid #e8e8e8;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #444;
+      text-decoration: none;
+      transition: all .2s;
+      margin-bottom: 8px;
+    }
+    .role-btn:hover {
+      border-color: #cc0c39;
+      color: #cc0c39;
+      background: #fff5f7;
+    }
+
+    .alert-danger {
+      background: #fff5f5;
+      color: #e53935;
+      border: 1px solid #ffcdd2;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT HERO PANEL -->
+  <div class="auth-left">
+    <div class="auth-brand">Apnora<span>Mart</span> Admin</div>
+
+    <div class="auth-hero-text">
+      <h1>Platform Administration & Control Center 🛡️</h1>
+      <p>Manage vendors, products, user verification, order statuses, and platform metrics with high-tier security.</p>
     </div>
-    <h1 class="auth-title">Admin Access</h1>
-    <p class="auth-subtitle">Authorized personnel only</p>
-    
-    <form method="post">
-      {% csrf_token %}
-      
-      <div class="auth-input-group">
-        {% render_field form.username class="premium-input" placeholder="Admin Username" %}
+
+    <div class="auth-perks">
+      <div class="auth-perk">
+        <div class="auth-perk-icon"><i class="fa-solid fa-user-shield"></i></div>
+        <div>
+          <div class="auth-perk-title">Vendor & KYC Verification</div>
+          <div class="auth-perk-sub">Review vendor documents & approve shop accounts</div>
+        </div>
       </div>
-      
-      <div class="auth-input-group">
-        {% render_field form.password class="premium-input" placeholder="Password" %}
+      <div class="auth-perk">
+        <div class="auth-perk-icon"><i class="fa-solid fa-chart-pie"></i></div>
+        <div>
+          <div class="auth-perk-title">Full Platform Metrics</div>
+          <div class="auth-perk-sub">Monitor revenue, customer orders & active stock</div>
+        </div>
       </div>
-      
-      <button type="submit" class="btn-premium btn-premium-primary auth-btn" style="background-color: var(--danger-color);">
-        Login to Dashboard
-      </button>
-    </form>
+      <div class="auth-perk">
+        <div class="auth-perk-icon"><i class="fa-solid fa-lock"></i></div>
+        <div>
+          <div class="auth-perk-title">Enterprise Security</div>
+          <div class="auth-perk-sub">Superuser credentials & role-based access control</div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-{% endblock content %}
+
+  <!-- RIGHT FORM PANEL -->
+  <div class="auth-right">
+    <div class="auth-card">
+      <div class="auth-mobile-brand">Apnora<span>Mart</span> Admin</div>
+
+      <div class="auth-badge">
+        <i class="fa-solid fa-shield-halved"></i> Admin Access
+      </div>
+
+      <h2 class="auth-card-title">Superuser Portal 🛡️</h2>
+      <p class="auth-card-sub">Authorized administrative personnel only</p>
+
+      {% if error %}
+        <div class="alert-danger"><i class="fa-solid fa-circle-exclamation"></i> {{ error }}</div>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="auth-field">
+          <label>Admin Username</label>
+          <div class="auth-input-wrap">
+            <i class="fa-solid fa-user-shield auth-input-icon"></i>
+            {% render_field form.username class="auth-input" placeholder="Enter admin username" %}
+          </div>
+        </div>
+
+        <div class="auth-field">
+          <label>Password</label>
+          <div class="auth-input-wrap">
+            <i class="fa-solid fa-lock auth-input-icon"></i>
+            {% render_field form.password class="auth-input" type="password" placeholder="Enter password" %}
+          </div>
+        </div>
+
+        <button type="submit" class="auth-submit">
+          Sign In to Admin Dashboard <i class="fa-solid fa-arrow-right" style="margin-left: 6px;"></i>
+        </button>
+      </form>
+
+      <div class="auth-divider"><span>OR CONTINUE AS</span></div>
+
+      <a href="/customerlogin" class="role-btn">
+        <i class="fa-solid fa-bag-shopping" style="color:#2874f0;"></i> Login as Customer
+      </a>
+      <a href="/vendorlogin" class="role-btn">
+        <i class="fa-solid fa-store" style="color:#008080;"></i> Login as Vendor
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

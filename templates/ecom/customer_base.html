@@ -16,11 +16,16 @@
   <div class="pm-navbar-inner">
     <a href="/" class="pm-logo">Apnora<span>Mart</span></a>
 
-    <form class="pm-search-wrap" action="/search" method="get" id="searchForm">
+    <form class="pm-search-wrap" action="/search" method="get" id="searchForm" style="display:flex; align-items:stretch;">
       <input class="pm-search-input" type="search" name="query" id="query"
              placeholder="Search for products, brands and more…"
              value="{{ request.GET.query }}" autocomplete="off">
-      <button class="pm-search-btn" type="submit">
+      
+      <button type="button" class="pm-search-btn" onclick="startVoice()" style="background:#f1f5f9; color:#475569; border-left:1px solid #e2e8f0; border-right:1px solid #e2e8f0; padding:0 16px; display:flex; align-items:center; justify-content:center; cursor:pointer;" title="Voice Search">
+        <i class="fa-solid fa-microphone"></i>
+      </button>
+
+      <button class="pm-search-btn" type="submit" style="display:flex; align-items:center; justify-content:center;">
         <i class="fa-solid fa-magnifying-glass"></i>
       </button>
     </form>
@@ -144,7 +149,9 @@
     if (!SR) { alert('Voice search not supported.'); return; }
     var r = new SR(); r.lang = 'en-IN'; r.start();
     r.onresult = e => {
-      document.getElementById('query').value = e.results[0][0].transcript;
+      var transcript = e.results[0][0].transcript;
+      transcript = transcript.replace(/\.+$/, "").trim();
+      document.getElementById('query').value = transcript;
       setTimeout(() => document.getElementById('searchForm').submit(), 400);
     };
   }

@@ -2,142 +2,468 @@
 {% load static %}
 {% block content %}
 
-<!-- ═══ HERO BANNER ═══ -->
-<div id="heroBanner" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="3500">
-  <div class="carousel-inner" style="border-radius:14px;overflow:hidden;">
-    <div class="carousel-item active">
-      <div style="height:280px;background:linear-gradient(135deg,#1a3c8e 0%,#2874f0 60%,#42a5f5 100%);display:flex;align-items:center;padding:32px 48px;">
-        <div>
-          <div style="font-size:12px;font-weight:700;color:#ffe082;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">🔥 Big Sale is Live</div>
-          <h2 style="font-size:clamp(22px,4vw,42px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em;">Up to 70% off<br>on iPhones & Gadgets</h2>
-          <p style="color:rgba(255,255,255,.75);font-size:14px;margin-bottom:20px;">Limited time offer. Shop before it's gone.</p>
-          <a href="#" style="background:#ffe082;color:#111;font-weight:700;padding:12px 28px;border-radius:99px;font-size:14px;display:inline-block;">Shop Now →</a>
-        </div>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <div style="height:280px;background:linear-gradient(135deg,#1b5e20 0%,#2e7d32 60%,#66bb6a 100%);display:flex;align-items:center;padding:32px 48px;">
-        <div>
-          <div style="font-size:12px;font-weight:700;color:#c8e6c9;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">⚡ Flash Deal</div>
-          <h2 style="font-size:clamp(22px,4vw,42px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em;">Fresh Groceries<br>at Doorstep</h2>
-          <p style="color:rgba(255,255,255,.75);font-size:14px;margin-bottom:20px;">Farm fresh, delivered within hours.</p>
-          <a href="#" style="background:#fff;color:#2e7d32;font-weight:700;padding:12px 28px;border-radius:99px;font-size:14px;display:inline-block;">Order Now →</a>
-        </div>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <div style="height:280px;background:linear-gradient(135deg,#4a148c 0%,#7b1fa2 60%,#ce93d8 100%);display:flex;align-items:center;padding:32px 48px;">
-        <div>
-          <div style="font-size:12px;font-weight:700;color:#e1bee7;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">👗 Fashion Week</div>
-          <h2 style="font-size:clamp(22px,4vw,42px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:12px;letter-spacing:-.02em;">Trending Styles<br>Flat 50% Off</h2>
-          <p style="color:rgba(255,255,255,.75);font-size:14px;margin-bottom:20px;">Top brands, unbeatable prices.</p>
-          <a href="#" style="background:#fff;color:#7b1fa2;font-weight:700;padding:12px 28px;border-radius:99px;font-size:14px;display:inline-block;">Explore →</a>
-        </div>
-      </div>
-    </div>
+<!-- ═══ PREMIUM DYNAMIC ANIMATIONS & GLOWING SHADOWS STYLESHEET ═══ -->
+<style>
+  /* Progressive Page Fade-in Animation */
+  .animate-fade-in {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Delay Classes for smooth cascade entrance */
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  /* Premium Floating Shadows & Hover Effects */
+  .hover-lift {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(15,23,42,0.12) !important;
+  }
+
+  /* Interactive Category Chip Animations */
+  .pm-cat-chip {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    border: 1px solid #f1f5f9;
+  }
+  .pm-cat-chip:hover {
+    transform: translateY(-5px) scale(1.05) !important;
+    box-shadow: 0 12px 24px rgba(40,116,240,0.14) !important;
+    border-color: rgba(40,116,240,0.2) !important;
+    background: #f8fafc !important;
+  }
+
+  /* Glassmorphism/Glow effects for Banners and Cards */
+  .glowing-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .glowing-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+    transform: rotate(45deg);
+    transition: 0.6s;
+    opacity: 0;
+  }
+  .glowing-btn:hover::after {
+    left: 120%;
+    opacity: 1;
+  }
+  .glowing-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  /* Smooth Scale for Product Images */
+  .pm-card-img-wrap img {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .pm-card:hover .pm-card-img-wrap img {
+    transform: scale(1.08) !important;
+  }
+</style>
+
+<!-- ═══ 1. FULL-WIDTH WIDESCREEN DISCOUNT TRANSMISSION CAROUSEL ═══ -->
+<div id="heroBanner" class="carousel slide carousel-fade mb-4 animate-fade-in" data-bs-ride="carousel" data-bs-interval="3000">
+  
+  <!-- Carousel Indicators -->
+  <div class="carousel-indicators" style="margin-bottom:18px;gap:6px;">
+    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="0" class="active" style="width:28px;height:8px;border-radius:99px;background:#fff;border:none;opacity:0.9;"></button>
+    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="1" style="width:10px;height:8px;border-radius:50%;background:rgba(255,255,255,0.6);border:none;opacity:0.8;"></button>
+    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="2" style="width:10px;height:8px;border-radius:50%;background:rgba(255,255,255,0.6);border:none;opacity:0.8;"></button>
+    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="3" style="width:10px;height:8px;border-radius:50%;background:rgba(255,255,255,0.6);border:none;opacity:0.8;"></button>
+    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="4" style="width:10px;height:8px;border-radius:50%;background:rgba(255,255,255,0.6);border:none;opacity:0.8;"></button>
+    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="5" style="width:10px;height:8px;border-radius:50%;background:rgba(255,255,255,0.6);border:none;opacity:0.8;"></button>
+    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="6" style="width:10px;height:8px;border-radius:50%;background:rgba(255,255,255,0.6);border:none;opacity:0.8;"></button>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#heroBanner" data-bs-slide="prev" style="width:40px;"><span class="carousel-control-prev-icon"></span></button>
-  <button class="carousel-control-next" type="button" data-bs-target="#heroBanner" data-bs-slide="next" style="width:40px;"><span class="carousel-control-next-icon"></span></button>
-  <div class="carousel-indicators" style="margin-bottom:8px;">
-    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="0" class="active" style="width:8px;height:8px;border-radius:99px;"></button>
-    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="1" style="width:8px;height:8px;border-radius:99px;"></button>
-    <button type="button" data-bs-target="#heroBanner" data-bs-slide-to="2" style="width:8px;height:8px;border-radius:99px;"></button>
+
+  <div class="carousel-inner" style="border-radius:20px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,0.22);">
+
+    <!-- SLIDE 1: Local Artisans Market - SUPPORT LOCAL -->
+    <div class="carousel-item active" data-bs-interval="3000">
+      <div style="height:340px;background:linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.25) 100%), url('https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=1400&auto=format&fit=crop&q=80') center/cover no-repeat;display:flex;align-items:center;padding:40px 64px;position:relative;">
+        <div style="max-width:650px;">
+          <div style="color:#ffb703;font-size:18px;font-weight:800;letter-spacing:0.04em;margin-bottom:8px;text-shadow:0 2px 4px rgba(0,0,0,0.5);">
+            Local Artisans Market
+          </div>
+          <h1 style="color:#ffffff;font-size:clamp(36px, 5.5vw, 60px);font-weight:900;letter-spacing:0.03em;line-height:1.05;margin-bottom:12px;text-transform:uppercase;text-shadow:0 3px 10px rgba(0,0,0,0.7);">
+            SUPPORT LOCAL
+          </h1>
+          <p style="color:rgba(255,255,255,0.92);font-size:19px;font-weight:600;margin-bottom:24px;text-shadow:0 2px 4px rgba(0,0,0,0.6);">
+            Flat 25% Off on Handmade Items & Handicrafts
+          </p>
+          <a href="#" class="glowing-btn" style="background:#ffb703;color:#000;font-weight:800;padding:12px 32px;border-radius:99px;font-size:15px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(255,183,3,0.4);text-decoration:none;">
+            Shop Local Artisans <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Raju Sabzi Mandi - UPTO 30% OFF (EXACT MATCH TO RED TOMATOES SCREENSHOT 2) -->
+    <div class="carousel-item" data-bs-interval="3000">
+      <div style="height:340px;background:linear-gradient(to right, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.15) 100%), url('https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=1400&auto=format&fit=crop&q=80') center/cover no-repeat;display:flex;align-items:center;padding:40px 64px;position:relative;">
+        <div style="max-width:650px;">
+          <div style="color:#ffb703;font-size:18px;font-weight:800;letter-spacing:0.04em;margin-bottom:8px;text-shadow:0 2px 4px rgba(0,0,0,0.5);">
+            Raju Sabzi Mandi
+          </div>
+          <h1 style="color:#ffffff;font-size:clamp(36px, 5.5vw, 60px);font-weight:900;letter-spacing:0.03em;line-height:1.05;margin-bottom:12px;text-transform:uppercase;text-shadow:0 3px 10px rgba(0,0,0,0.7);">
+            UPTO 30% OFF
+          </h1>
+          <p style="color:rgba(255,255,255,0.92);font-size:19px;font-weight:600;margin-bottom:24px;text-shadow:0 2px 4px rgba(0,0,0,0.6);">
+            Fresh Farm Vegetables & Organic Produce Delivered in 10 Mins
+          </p>
+          <a href="#" class="glowing-btn" style="background:#ff6b35;color:#fff;font-weight:800;padding:12px 32px;border-radius:99px;font-size:15px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(255,107,53,0.4);text-decoration:none;">
+            Order Fresh Veggies <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Apple & Flagship Mobiles - MEGA IPHONE SALE -->
+    <div class="carousel-item" data-bs-interval="3000">
+      <div style="height:340px;background:linear-gradient(to right, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.6) 50%, rgba(15,23,42,0.2) 100%), url('https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=1400&auto=format&fit=crop&q=80') center/cover no-repeat;display:flex;align-items:center;padding:40px 64px;position:relative;">
+        <div style="max-width:650px;">
+          <div style="color:#ffb703;font-size:18px;font-weight:800;letter-spacing:0.04em;margin-bottom:8px;text-shadow:0 2px 4px rgba(0,0,0,0.5);">
+            Apple & Flagship Smartphones
+          </div>
+          <h1 style="color:#ffffff;font-size:clamp(36px, 5.5vw, 60px);font-weight:900;letter-spacing:0.03em;line-height:1.05;margin-bottom:12px;text-transform:uppercase;text-shadow:0 3px 10px rgba(0,0,0,0.7);">
+            MEGA IPHONE SALE
+          </h1>
+          <p style="color:rgba(255,255,255,0.92);font-size:19px;font-weight:600;margin-bottom:24px;text-shadow:0 2px 4px rgba(0,0,0,0.6);">
+            Flat 70% Off on iPhone 15 Pro & Top Smartphones + Instant Bank Discount
+          </p>
+          <a href="#" class="glowing-btn" style="background:#2874f0;color:#fff;font-weight:800;padding:12px 32px;border-radius:99px;font-size:15px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(40,116,240,0.4);text-decoration:none;">
+            Explore Mobiles <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: RedTape & Top Footwear - SNEAKER CARNIVAL -->
+    <div class="carousel-item" data-bs-interval="3000">
+      <div style="height:340px;background:linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1400&auto=format&fit=crop&q=80') center/cover no-repeat;display:flex;align-items:center;padding:40px 64px;position:relative;">
+        <div style="max-width:650px;">
+          <div style="color:#ffb703;font-size:18px;font-weight:800;letter-spacing:0.04em;margin-bottom:8px;text-shadow:0 2px 4px rgba(0,0,0,0.5);">
+            RedTape, Nike & Leather Boots
+          </div>
+          <h1 style="color:#ffffff;font-size:clamp(36px, 5.5vw, 60px);font-weight:900;letter-spacing:0.03em;line-height:1.05;margin-bottom:12px;text-transform:uppercase;text-shadow:0 3px 10px rgba(0,0,0,0.7);">
+            FOOTWEAR FESTIVAL
+          </h1>
+          <p style="color:rgba(255,255,255,0.92);font-size:19px;font-weight:600;margin-bottom:24px;text-shadow:0 2px 4px rgba(0,0,0,0.6);">
+            Flat 60% Off on Trending Shoes, Boots & Casual Sneakers Starting ₹999
+          </p>
+          <a href="#" class="glowing-btn" style="background:#ffb703;color:#000;font-weight:800;padding:12px 32px;border-radius:99px;font-size:15px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(255,183,3,0.4);text-decoration:none;">
+            Shop Footwear <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: LG & Samsung 4K Smart TVs - BIG HOME FESTIVAL -->
+    <div class="carousel-item" data-bs-interval="3000">
+      <div style="height:340px;background:linear-gradient(to right, rgba(6,78,59,0.9) 0%, rgba(6,78,59,0.55) 50%, rgba(6,78,59,0.2) 100%), url('https://images.unsplash.com/photo-1593784991095-a205069470b6?w=1400&auto=format&fit=crop&q=80') center/cover no-repeat;display:flex;align-items:center;padding:40px 64px;position:relative;">
+        <div style="max-width:650px;">
+          <div style="color:#ffb703;font-size:18px;font-weight:800;letter-spacing:0.04em;margin-bottom:8px;text-shadow:0 2px 4px rgba(0,0,0,0.5);">
+            LG 4K TVs & Refrigerators
+          </div>
+          <h1 style="color:#ffffff;font-size:clamp(36px, 5.5vw, 60px);font-weight:900;letter-spacing:0.03em;line-height:1.05;margin-bottom:12px;text-transform:uppercase;text-shadow:0 3px 10px rgba(0,0,0,0.7);">
+            BIG TV & FRIDGE FEST
+          </h1>
+          <p style="color:rgba(255,255,255,0.92);font-size:19px;font-weight:600;margin-bottom:24px;text-shadow:0 2px 4px rgba(0,0,0,0.6);">
+            Flat 65% Off on Double Door Refrigerators & Smart TVs + Free Installation
+          </p>
+          <a href="#" class="glowing-btn" style="background:#10b981;color:#fff;font-weight:800;padding:12px 32px;border-radius:99px;font-size:15px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(16,185,129,0.4);text-decoration:none;">
+            Explore Appliances <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Premium Audio & Earbuds - AUDIO FESTIVAL -->
+    <div class="carousel-item" data-bs-interval="3000">
+      <div style="height:340px;background:linear-gradient(to right, rgba(58,28,113,0.9) 0%, rgba(58,28,113,0.55) 50%, rgba(58,28,113,0.2) 100%), url('https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=1400&auto=format&fit=crop&q=80') center/cover no-repeat;display:flex;align-items:center;padding:40px 64px;position:relative;">
+        <div style="max-width:650px;">
+          <div style="color:#ffb703;font-size:18px;font-weight:800;letter-spacing:0.04em;margin-bottom:8px;text-shadow:0 2px 4px rgba(0,0,0,0.5);">
+            Realme, pTron & iQOO Wireless
+          </div>
+          <h1 style="color:#ffffff;font-size:clamp(36px, 5.5vw, 60px);font-weight:900;letter-spacing:0.03em;line-height:1.05;margin-bottom:12px;text-transform:uppercase;text-shadow:0 3px 10px rgba(0,0,0,0.7);">
+            AUDIO FESTIVAL
+          </h1>
+          <p style="color:rgba(255,255,255,0.92);font-size:19px;font-weight:600;margin-bottom:24px;text-shadow:0 2px 4px rgba(0,0,0,0.6);">
+            Noise Cancelling Earbuds & Wireless Headphones Starting at Just ₹699
+          </p>
+          <a href="#" class="glowing-btn" style="background:#8b5cf6;color:#fff;font-weight:800;padding:12px 32px;border-radius:99px;font-size:15px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(139,92,246,0.4);text-decoration:none;">
+            Shop Audio <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Streetwear & Fashion Trends - FASHION WEEK -->
+    <div class="carousel-item" data-bs-interval="3000">
+      <div style="height:340px;background:linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=1400&auto=format&fit=crop&q=80') center/cover no-repeat;display:flex;align-items:center;padding:40px 64px;position:relative;">
+        <div style="max-width:650px;">
+          <div style="color:#ffb703;font-size:18px;font-weight:800;letter-spacing:0.04em;margin-bottom:8px;text-shadow:0 2px 4px rgba(0,0,0,0.5);">
+            TRIPR & BULLMER Men's Wear
+          </div>
+          <h1 style="color:#ffffff;font-size:clamp(36px, 5.5vw, 60px);font-weight:900;letter-spacing:0.03em;line-height:1.05;margin-bottom:12px;text-transform:uppercase;text-shadow:0 3px 10px rgba(0,0,0,0.7);">
+            FASHION WEEK
+          </h1>
+          <p style="color:rgba(255,255,255,0.92);font-size:19px;font-weight:600;margin-bottom:24px;text-shadow:0 2px 4px rgba(0,0,0,0.6);">
+            Flat 50% Off on Oversized T-Shirts, Hoodies & Trending Clothes
+          </p>
+          <a href="#" class="glowing-btn" style="background:#ffb703;color:#000;font-weight:800;padding:12px 32px;border-radius:99px;font-size:15px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(255,183,3,0.4);text-decoration:none;">
+            Explore Fashion <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Carousel Controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroBanner" data-bs-slide="prev" style="width:50px;height:50px;background:rgba(0,0,0,0.4);border-radius:50%;top:50%;transform:translateY(-50%);left:20px;border:none;">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroBanner" data-bs-slide="next" style="width:50px;height:50px;background:rgba(0,0,0,0.4);border-radius:50%;top:50%;transform:translateY(-50%);right:20px;border:none;">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+
+</div>
+
+<!-- ═══ 2. FLASH SALE BANNER (WITH TICKING TIMER) ═══ -->
+<div class="animate-fade-in delay-1" style="background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:32px 40px;margin-bottom:28px;box-shadow:0 10px 25px rgba(0,0,0,0.05);position:relative;overflow:hidden;">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;">
+    
+    <!-- Left Info -->
+    <div style="flex:1;min-width:300px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+        <span style="font-size:28px;color:#ff6b35;animation:pulse 1.5s infinite;">⚡</span>
+        <h2 style="font-size:32px;font-weight:800;color:#0f172a;letter-spacing:-.03em;margin:0;">Flash Sale</h2>
+      </div>
+      <p style="color:#64748b;font-size:15px;margin-bottom:20px;font-weight:500;">Grab the best deals before they're gone!</p>
+      
+      <!-- Feature Pills -->
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div style="display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid #e2e8f0;padding:8px 16px;border-radius:99px;font-size:13px;font-weight:600;color:#334155;box-shadow:0 2px 4px rgba(0,0,0,0.02);">
+          <i class="fa-solid fa-shield-halved" style="color:#2874f0;"></i>
+          <div><span style="font-weight:700;">Top Brands</span> <span style="color:#94a3b8;font-size:12px;">100% Original Products</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid #e2e8f0;padding:8px 16px;border-radius:99px;font-size:13px;font-weight:600;color:#334155;box-shadow:0 2px 4px rgba(0,0,0,0.02);">
+          <i class="fa-solid fa-tag" style="color:#ff6b35;"></i>
+          <div><span style="font-weight:700;">Best Prices</span> <span style="color:#94a3b8;font-size:12px;">Unbeatable Deals</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid #e2e8f0;padding:8px 16px;border-radius:99px;font-size:13px;font-weight:600;color:#334155;box-shadow:0 2px 4px rgba(0,0,0,0.02);">
+          <i class="fa-solid fa-truck-fast" style="color:#03a685;"></i>
+          <div><span style="font-weight:700;">Fast Delivery</span> <span style="color:#94a3b8;font-size:12px;">Guaranteed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side: Main Banner Live Countdown Timer -->
+    <div style="display:flex;align-items:center;gap:32px;">
+      <div style="text-align:center;">
+        <div style="font-size:11px;font-weight:800;color:#ef4444;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:6px;">
+          <i class="fa-solid fa-fire"></i> Sale ends in
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:10px 14px;min-width:58px;box-shadow:0 4px 10px rgba(0,0,0,0.04);text-align:center;">
+            <div style="font-size:22px;font-weight:800;color:#0f172a;line-height:1;" id="fsDays">02</div>
+            <div style="font-size:11px;color:#94a3b8;font-weight:600;margin-top:4px;">Days</div>
+          </div>
+          <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:10px 14px;min-width:58px;box-shadow:0 4px 10px rgba(0,0,0,0.04);text-align:center;">
+            <div style="font-size:22px;font-weight:800;color:#0f172a;line-height:1;" id="fsHours">08</div>
+            <div style="font-size:11px;color:#94a3b8;font-weight:600;margin-top:4px;">Hours</div>
+          </div>
+          <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:10px 14px;min-width:58px;box-shadow:0 4px 10px rgba(0,0,0,0.04);text-align:center;">
+            <div style="font-size:22px;font-weight:800;color:#0f172a;line-height:1;" id="fsMins">45</div>
+            <div style="font-size:11px;color:#94a3b8;font-weight:600;margin-top:4px;">Mins</div>
+          </div>
+          <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:10px 14px;min-width:58px;box-shadow:0 4px 10px rgba(0,0,0,0.04);text-align:center;">
+            <div style="font-size:22px;font-weight:800;color:#ef4444;line-height:1;" id="fsSecs">09</div>
+            <div style="font-size:11px;color:#94a3b8;font-weight:600;margin-top:4px;">Secs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Shopping Bag Illustration -->
+      <div class="d-none d-md-flex" style="width:140px;height:120px;position:relative;align-items:center;justify-content:center;">
+        <svg width="140" height="120" viewBox="0 0 140 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="60" width="40" height="40" rx="6" fill="#EA4335"/>
+          <rect x="26" y="60" width="8" height="40" fill="#FFC107"/>
+          <rect x="10" y="76" width="40" height="8" fill="#FFC107"/>
+          <path d="M22 60C22 55 30 55 30 60C30 55 38 55 38 60" stroke="#FFC107" stroke-width="3" stroke-linecap="round"/>
+          <rect x="42" y="30" width="65" height="75" rx="10" fill="#2874F0"/>
+          <path d="M58 30V20C58 14 86 14 86 20V30" stroke="#1A5DC8" stroke-width="5" stroke-linecap="round"/>
+          <path d="M78 45L66 65H76L72 85L88 62H77L78 45Z" fill="#FFFFFF"/>
+          <rect x="92" y="70" width="35" height="30" rx="5" fill="#FF9800"/>
+          <rect x="106" y="70" width="7" height="30" fill="#FFFFFF"/>
+          <rect x="92" y="82" width="35" height="6" fill="#FFFFFF"/>
+          <circle cx="20" cy="30" r="3" fill="#FFC107"/>
+          <circle cx="120" cy="40" r="3" fill="#EA4335"/>
+          <circle cx="35" cy="18" r="2" fill="#4285F4"/>
+          <circle cx="110" cy="20" r="2.5" fill="#34A853"/>
+        </svg>
+      </div>
+
+    </div>
+
   </div>
 </div>
 
-<!-- ═══ TRUST BAR ═══ -->
-<div class="pm-trust-bar mb-4">
-  <div class="pm-trust-item">
-    <div class="pm-trust-icon" style="color:#2874f0;">🚚</div>
-    <div><div class="pm-trust-title">Free Delivery</div><div class="pm-trust-sub">On orders above ₹499</div></div>
-  </div>
-  <div class="pm-trust-item">
-    <div class="pm-trust-icon" style="color:#03a685;">🔒</div>
-    <div><div class="pm-trust-title">Secure Payment</div><div class="pm-trust-sub">100% safe checkout</div></div>
-  </div>
-  <div class="pm-trust-item">
-    <div class="pm-trust-icon" style="color:#f0a500;">↩️</div>
-    <div><div class="pm-trust-title">Easy Returns</div><div class="pm-trust-sub">7-day return policy</div></div>
-  </div>
-  <div class="pm-trust-item">
-    <div class="pm-trust-icon" style="color:#e53935;">💎</div>
-    <div><div class="pm-trust-title">Premium Quality</div><div class="pm-trust-sub">Verified sellers only</div></div>
-  </div>
-</div>
-
-<!-- ═══ CATEGORIES ═══ -->
+<!-- ═══ 3. SHOP BY CATEGORY ═══ -->
 {% if categories %}
-<div class="pm-section mb-4">
+<div class="pm-section mb-4 animate-fade-in delay-2">
   <div class="pm-section-header">
-    <div class="pm-section-title"><span class="title-accent"></span> Shop by Category</div>
+    <div class="pm-section-title" style="font-size:22px;font-weight:800;color:#0f172a;display:flex;align-items:center;gap:8px;">
+      <span style="color:#2874f0;">📁</span> Shop by Category
+    </div>
   </div>
   <div class="pm-categories">
     {% for cat in categories %}
-    <a href="?category={{ cat.id }}" class="pm-cat-chip">
-      <div class="pm-cat-img-box">
+    <a href="?category={{ cat.id }}" class="pm-cat-chip" style="background:#fff;border-radius:14px;padding:12px 18px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;">
+      <div class="pm-cat-img-box" style="transition:transform 0.3s ease;">
         {% if cat.image %}
           <img src="{{ cat.image.url }}" alt="{{ cat.name }}">
         {% else %}
           <i class="fa-solid fa-box" style="font-size:24px;color:#999;"></i>
         {% endif %}
       </div>
-      <span class="pm-cat-label">{{ cat.name }}</span>
+      <span class="pm-cat-label" style="font-weight:700;color:#334155;font-size:14px;">{{ cat.name }}</span>
     </a>
     {% endfor %}
   </div>
 </div>
 {% endif %}
 
-<!-- ═══ FLASH SALE ═══ -->
-{% if products %}
-<div class="pm-section mb-4">
-  <div class="pm-section-header">
-    <div class="pm-section-title">
-      <span class="title-accent" style="background:var(--sale-red);"></span>
-      ⚡ Flash Sale
-      <div class="pm-deal-timer" data-timer="5400">
-        <span class="pm-timer-box"><span class="t-h">01</span></span>:
-        <span class="pm-timer-box"><span class="t-m">30</span></span>:
-        <span class="pm-timer-box"><span class="t-s">00</span></span>
-      </div>
+<!-- ═══ 4. BOTTOM TRUST BAR (MOVED DIRECTLY BELOW CATEGORIES!) ═══ -->
+<div class="animate-fade-in delay-2 hover-lift" style="background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:28px 36px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:32px;box-shadow:0 8px 24px rgba(0,0,0,0.04);">
+  
+  <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:220px;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+    <div style="width:46px;height:46px;border-radius:50%;background:#e0f2fe;color:#0284c7;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 10px rgba(2,132,199,0.15);">
+      <i class="fa-solid fa-shield-check"></i>
     </div>
-    <a href="#" class="pm-view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+    <div>
+      <div style="font-weight:800;font-size:14.5px;color:#0f172a;margin-bottom:2px;">100% Secure Payments</div>
+      <div style="font-size:12px;color:#64748b;font-weight:500;">Your transactions are safe with us</div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:220px;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+    <div style="width:46px;height:46px;border-radius:50%;background:#f0fdf4;color:#16a34a;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 10px rgba(22,163,74,0.15);">
+      <i class="fa-solid fa-rotate-left"></i>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14.5px;color:#0f172a;margin-bottom:2px;">Easy Returns</div>
+      <div style="font-size:12px;color:#64748b;font-weight:500;">Hassle-free returns within 7 days</div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:220px;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+    <div style="width:46px;height:46px;border-radius:50%;background:#fef3c7;color:#d97706;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 10px rgba(217,119,6,0.15);">
+      <i class="fa-solid fa-headset"></i>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14.5px;color:#0f172a;margin-bottom:2px;">24/7 Customer Support</div>
+      <div style="font-size:12px;color:#64748b;font-weight:500;">We're here to help you anytime</div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:220px;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+    <div style="width:46px;height:46px;border-radius:50%;background:#f3e8ff;color:#9333ea;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 10px rgba(147,51,234,0.15);">
+      <i class="fa-solid fa-users"></i>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14.5px;color:#0f172a;margin-bottom:2px;">Trusted by Thousands</div>
+      <div style="font-size:12px;color:#64748b;font-weight:500;">Join our growing community</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 5. FLASH SALE PRODUCTS GRID WITH PREMIUM HOVER TRANSITIONS ═══ -->
+{% if products %}
+<div class="pm-section mb-4 animate-fade-in delay-3">
+  <div class="pm-section-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+    <div class="pm-section-title" style="font-size:22px;font-weight:800;color:#0f172a;display:flex;align-items:center;gap:8px;">
+      <span style="color:#ff6b35;font-size:24px;">✨</span> Flash Sale Products
+      <span style="background:#ffedd5;color:#c2410c;font-size:12px;font-weight:800;padding:4px 12px;border-radius:99px;margin-left:8px;box-shadow:0 2px 4px rgba(234,88,12,0.1);">LIVE DEALS</span>
+    </div>
+    <a href="#" class="pm-view-all" style="font-size:14px;font-weight:700;color:#2874f0;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:transform 0.2s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='none'">
+      View All Deals <i class="fa-solid fa-arrow-right"></i>
+    </a>
   </div>
 
   <div class="pm-product-grid">
     {% for p in products %}
-    <div class="pm-card">
-      <div class="pm-badge pm-badge-sale">20% OFF</div>
-      <button class="pm-wishlist-btn" title="Wishlist"><i class="fa-regular fa-heart"></i></button>
+    <div class="pm-card hover-lift" style="background:#fff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;position:relative;box-shadow:0 6px 20px rgba(0,0,0,0.03);">
+      
+      <!-- Top Badges: Discount % -->
+      <div style="position:absolute;top:12px;left:12px;z-index:3;display:flex;flex-direction:column;gap:4px;">
+        <span class="pm-badge pm-badge-sale" style="background:#cc0c39;color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;box-shadow:0 2px 6px rgba(204,12,57,0.3);">20% OFF</span>
+      </div>
+
+      <button class="pm-wishlist-btn" title="Wishlist" style="position:absolute;top:12px;right:12px;z-index:3;background:#fff;border:1px solid #e2e8f0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#94a3b8;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.06);transition:all 0.2s;" onmouseover="this.style.color='#ef4444';this.style.transform='scale(1.1)';" onmouseout="this.style.color='#94a3b8';this.style.transform='scale(1)';">
+        <i class="fa-regular fa-heart"></i>
+      </button>
 
       <a href="{% url 'add-to-cart' p.id %}">
-        <div class="pm-card-img-wrap">
+        <div class="pm-card-img-wrap" style="height:190px;background:#f8fafc;display:flex;align-items:center;justify-content:center;padding:16px;overflow:hidden;">
           {% if p.product_image %}
-            <img src="{{ p.product_image.url }}" alt="{{ p.name }}" loading="lazy">
+            <img src="{{ p.product_image.url }}" alt="{{ p.name }}" loading="lazy" style="max-height:100%;max-width:100%;object-fit:contain;">
           {% else %}
-            <i class="fa-solid fa-image" style="font-size:48px;color:#ddd;"></i>
+            <i class="fa-solid fa-image" style="font-size:48px;color:#cbd5e1;"></i>
           {% endif %}
         </div>
       </a>
 
-      <div class="pm-card-body">
-        <div class="pm-card-brand">ApnoraMart</div>
+      <div class="pm-card-body" style="padding:16px;">
         <a href="{% url 'add-to-cart' p.id %}" style="text-decoration:none;">
-          <div class="pm-card-name">{{ p.name }}</div>
+          <div class="pm-card-name" style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="{{ p.name }}">{{ p.name }}</div>
         </a>
-        <div class="pm-stars">
-          <span class="stars">★★★★☆</span>
-          <span class="count">(128)</span>
+        
+        <div class="pm-stars" style="display:flex;align-items:center;gap:4px;font-size:12px;margin-bottom:8px;">
+          <span class="stars" style="color:#f59e0b;">★★★★☆</span>
+          <span class="count" style="color:#94a3b8;font-size:11px;">(128)</span>
         </div>
-        <div class="pm-card-price-row">
-          <span class="pm-card-price">₹{{ p.price }}</span>
-          <span class="pm-card-discount">20% off</span>
+
+        <!-- ⏱️ INDIVIDUAL PRODUCT LIVE TIMER COUNTER -->
+        <div style="background:linear-gradient(90deg, #fff7ed, #fff1f2);border:1px solid #ffedd5;color:#c2410c;font-size:11px;font-weight:700;padding:6px 10px;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="display:flex;align-items:center;gap:4px;"><i class="fa-solid fa-stopwatch" style="color:#ea580c;"></i> Ends in:</span>
+          <span class="card-live-timer" style="font-weight:800;font-family:monospace;font-size:12px;color:#9a3412;">08h 45m 09s</span>
         </div>
-        <div class="pm-card-delivery"><i class="fa-solid fa-truck-fast"></i> Free delivery by Tomorrow</div>
-        <div class="pm-card-actions">
-          <a href="{% url 'add-to-cart' p.id %}" class="pm-btn-cart"><i class="fa-solid fa-cart-plus"></i> Add to Cart</a>
-          <a href="{% url 'add-to-cart' p.id %}" class="pm-btn-buy">Buy Now</a>
+
+        <!-- Price & Discount Details -->
+        <div class="pm-card-price-row" style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;">
+          <span class="pm-card-price" style="font-size:18px;font-weight:800;color:#0f172a;">₹{{ p.price }}</span>
+          <span style="text-decoration:line-through;color:#94a3b8;font-size:13px;">₹{% widthratio p.price 8 10 %}</span>
+          <span style="color:#16a34a;font-weight:700;font-size:12px;">20% off</span>
         </div>
+
+        <div class="pm-card-delivery" style="font-size:11px;color:#64748b;margin-bottom:14px;display:flex;align-items:center;gap:4px;">
+          <i class="fa-solid fa-truck-fast" style="color:#2874f0;"></i> Free delivery
+        </div>
+        
+        <!-- Action Buttons with Hover Effects -->
+        <div style="display:flex;gap:8px;">
+          <a href="{% url 'add-to-cart' p.id %}" class="glowing-btn" style="flex:1;background:#2874f0;color:#fff;font-size:13px;font-weight:700;padding:10px;border-radius:8px;text-align:center;text-decoration:none;display:inline-block;box-shadow:0 4px 10px rgba(40,116,240,0.25);">
+            Add to Cart
+          </a>
+          <a href="{% url 'add-to-cart' p.id %}?buy_now=true" class="glowing-btn" style="flex:1;background:#ff6b35;color:#fff;font-size:13px;font-weight:700;padding:10px;border-radius:8px;text-align:center;text-decoration:none;display:inline-block;box-shadow:0 4px 10px rgba(255,107,53,0.25);">
+            Buy Now
+          </a>
+        </div>
+
       </div>
     </div>
     {% endfor %}
@@ -145,14 +471,43 @@
 </div>
 {% endif %}
 
-<!-- ═══ NEWSLETTER ═══ -->
-<div class="pm-newsletter">
-  <h3>🎁 Get Exclusive Deals in Your Inbox</h3>
-  <p>Subscribe and be the first to know about our best offers, new arrivals and flash sales.</p>
-  <div class="pm-newsletter-form">
-    <input class="pm-newsletter-input" type="email" placeholder="Enter your email address…">
-    <button class="pm-newsletter-btn">Subscribe</button>
+<!-- ═══ 6. NAVY STAY UPDATED NEWSLETTER BAR ═══ -->
+<div class="animate-fade-in delay-4" style="background:#0d1b3e;border-radius:14px;padding:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;color:#fff;margin-bottom:32px;box-shadow:0 10px 25px rgba(13,27,62,0.15);">
+  <div>
+    <div style="font-weight:800;font-size:20px;margin-bottom:4px;letter-spacing:-0.01em;">Stay Updated</div>
+    <div style="font-size:13.5px;color:rgba(255,255,255,0.7);font-weight:500;">Subscribe to get special offers and updates</div>
+  </div>
+  <div style="display:flex;gap:10px;flex:1;max-width:480px;">
+    <input type="email" placeholder="Enter your email" style="flex:1;padding:12px 18px;border-radius:8px;border:none;outline:none;font-size:14px;background:rgba(255,255,255,0.1);color:#fff;transition:background 0.3s ease;" onfocus="this.style.background='rgba(255,255,255,0.18)'" onblur="this.style.background='rgba(255,255,255,0.1)'">
+    <button class="glowing-btn" style="background:#ff6b35;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 4px 10px rgba(255,107,53,0.3);">Subscribe</button>
   </div>
 </div>
+
+<!-- ⏱️ LIVE TICKING COUNTDOWN TIMER SCRIPT ═══ -->
+<script>
+  let seconds = 2 * 86400 + 8 * 3600 + 45 * 60 + 9;
+  setInterval(function() {
+    if (seconds > 0) seconds--;
+    let d = Math.floor(seconds / 86400);
+    let h = Math.floor((seconds % 86400) / 3600);
+    let m = Math.floor((seconds % 3600) / 60);
+    let s = seconds % 60;
+    
+    let dStr = d < 10 ? '0' + d : d;
+    let hStr = h < 10 ? '0' + h : h;
+    let mStr = m < 10 ? '0' + m : m;
+    let sStr = s < 10 ? '0' + s : s;
+
+    if(document.getElementById('fsDays')) document.getElementById('fsDays').innerText = dStr;
+    if(document.getElementById('fsHours')) document.getElementById('fsHours').innerText = hStr;
+    if(document.getElementById('fsMins')) document.getElementById('fsMins').innerText = mStr;
+    if(document.getElementById('fsSecs')) document.getElementById('fsSecs').innerText = sStr;
+
+    let productTimers = document.querySelectorAll('.card-live-timer');
+    productTimers.forEach(function(el) {
+      el.innerText = `${hStr}h ${mStr}m ${sStr}s`;
+    });
+  }, 1000);
+</script>
 
 {% endblock %}

@@ -135,11 +135,12 @@
 
             <!-- Search Bar -->
             <div class="col-12 col-md-8 order-md-2">
-                <form action="/search" method="get">
+                <form action="/search" method="get" id="searchForm">
                     <div class="d-flex w-100" style="height: 42px;">
                         <input class="navbar-input flex-grow-1" type="search"
                             placeholder="Search for Products, Brands and more"
                             name="query" id="query">
+                        <button type="button" class="navbar-button" onclick="startVoice()" style="background:#f1f5f9; color:#475569; border-left:1px solid #e2e8f0; border-right:1px solid #e2e8f0; padding:0 14px;" title="Voice Search">🎙️</button>
                         <button class="navbar-button" type="submit">🔍</button>
                     </div>
                 </form>
@@ -148,5 +149,18 @@
     </div>
 </div>
 
+<script>
+  function startVoice() {
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { alert('Voice search not supported.'); return; }
+    var r = new SR(); r.lang = 'en-IN'; r.start();
+    r.onresult = e => {
+      var transcript = e.results[0][0].transcript;
+      transcript = transcript.replace(/\.+$/, "").trim();
+      document.getElementById('query').value = transcript;
+      setTimeout(() => document.getElementById('searchForm').submit(), 400);
+    };
+  }
+</script>
 </body>
 </html>

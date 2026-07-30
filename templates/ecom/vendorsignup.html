@@ -1,99 +1,249 @@
-<!DOCTYPE html>
+{% load static %}
 {% load widget_tweaks %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vendor Registration – ApnoraMart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background: #f4f5f7;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
 
-<style>
-/* SAME CSS (no change) */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to right, #b92b27, #1565c0)
-}
+    .signup-header {
+      background: linear-gradient(135deg, #1b3a4b 0%, #006666 50%, #008080 100%);
+      padding: 40px 20px 70px;
+      color: #fff;
+      text-align: center;
+      position: relative;
+    }
+    .signup-brand {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 12px;
+    }
+    .signup-brand span { color: #ffe082; }
+    .signup-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 8px;
+    }
+    .signup-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,.8);
+      max-width: 500px;
+      margin: 0 auto;
+    }
 
-.box {
-    width: 500px;
-    padding: 40px;
-    position: absolute;
-    top: 600px;
-    left: 50%;
-    background: #191919;
-    text-align: center;
-    transform: translate(-50%, -50%);
-}
+    .signup-container {
+      max-width: 760px;
+      width: 100%;
+      margin: -40px auto 50px;
+      padding: 0 20px;
+      position: relative;
+      z-index: 10;
+    }
 
-.box input {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 12px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 10px;
-    width: 250px;
-    color: white;
-    border-radius: 24px;
-}
+    .signup-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.08);
+      border: 1px solid #eef2f6;
+    }
 
-.box input:focus {
-    width: 300px;
-    border-color: #2ecc71;
-}
+    .form-section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #008080;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e8f5f5;
+    }
 
-.box h1 {
-    color: white;
-}
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media(min-width: 600px){
+      .form-grid-2 { grid-template-columns: repeat(2, 1fr); }
+    }
 
-.box input[type="submit"] {
-    border: 2px solid #2ecc71;
-    cursor: pointer;
-}
+    .auth-field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 6px;
+    }
+    .auth-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #e8e8e8;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: #111;
+      background: #fafafa;
+      outline: none;
+      transition: all .2s;
+    }
+    .auth-input:focus {
+      border-color: #008080;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(0,128,128,.12);
+    }
 
-.box input[type="submit"]:hover {
-    background: #2ecc71;
-}
-</style>
+    .signup-submit {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #008080 0%, #006666 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      margin-top: 12px;
+      box-shadow: 0 6px 20px rgba(0,128,128,.35);
+      transition: all .2s;
+    }
+    .signup-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(0,128,128,.45);
+    }
 
+    .signup-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+      color: #666;
+    }
+    .signup-footer a {
+      color: #008080;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .signup-footer a:hover { text-decoration: underline; }
+  </style>
 </head>
-
 <body>
 
-{% include "ecom/navbar.html" %}
+  <div class="signup-header">
+    <div class="signup-brand">Apnora<span>Mart</span> Seller</div>
+    <h1 class="signup-title">Register Your Vendor Account 🏪</h1>
+    <p class="signup-sub">Start selling products to lakhs of customers across India in just a few steps.</p>
+  </div>
 
-<form class="box" method="post" enctype="multipart/form-data">
-{% csrf_token %}
+  <div class="signup-container">
+    <div class="signup-card">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
 
-<h1>VENDOR SIGNUP</h1>
+        <!-- SECTION 1: ACCOUNT -->
+        <div class="form-section-title">
+          <i class="fa-solid fa-user-lock"></i> Account Credentials
+        </div>
+        <div class="form-grid form-grid-2">
+          <div class="auth-field">
+            <label>Username *</label>
+            {% render_field userForm.username class="auth-input" placeholder="Choose a username" %}
+          </div>
+          <div class="auth-field">
+            <label>Email Address *</label>
+            {% render_field userForm.email class="auth-input" type="email" placeholder="vendor@example.com" %}
+          </div>
+          <div class="auth-field">
+            <label>Password *</label>
+            {% render_field userForm.password class="auth-input" type="password" placeholder="Create password" %}
+          </div>
+          <div class="auth-field">
+            <label>Confirm Password *</label>
+            {% render_field userForm.confirm_password class="auth-input" type="password" placeholder="Confirm password" %}
+          </div>
+        </div>
 
-<p style="color:white;">Create your seller account</p>
-{% render_field userForm.username placeholder="Username" %}
-{% render_field userForm.email placeholder="Email" %}
-{% render_field userForm.password placeholder="Password" %}
-{% render_field userForm.confirm_password placeholder="Confirm Password" %}
+        <!-- SECTION 2: SHOP DETAILS -->
+        <div class="form-section-title">
+          <i class="fa-solid fa-store"></i> Shop & Business Information
+        </div>
+        <div class="form-grid form-grid-2">
+          <div class="auth-field">
+            <label>Shop Name *</label>
+            {% render_field vendorForm.shop_name class="auth-input" placeholder="e.g. Apnora Electronics Store" %}
+          </div>
+          <div class="auth-field">
+            <label>Mobile Number *</label>
+            {% render_field vendorForm.mobile class="auth-input" placeholder="10-digit mobile number" %}
+          </div>
+        </div>
 
-<!-- 🏪 SHOP DETAILS -->
-{% render_field vendorForm.shop_name placeholder="Shop Name" %}
-{% render_field vendorForm.mobile placeholder="Mobile Number" %}
+        <!-- SECTION 3: LOCATION -->
+        <div class="form-section-title">
+          <i class="fa-solid fa-location-dot"></i> Store Address
+        </div>
+        <div class="form-grid form-grid-2">
+          <div class="auth-field" style="grid-column: span 2;">
+            <label>Address Line *</label>
+            {% render_field vendorForm.address_line class="auth-input" placeholder="Shop No, Street, Landmark" %}
+          </div>
+          <div class="auth-field">
+            <label>City *</label>
+            {% render_field vendorForm.city class="auth-input" placeholder="e.g. Mumbai" %}
+          </div>
+          <div class="auth-field">
+            <label>State *</label>
+            {% render_field vendorForm.state class="auth-input" placeholder="e.g. Maharashtra" %}
+          </div>
+          <div class="auth-field">
+            <label>Pincode *</label>
+            {% render_field vendorForm.pincode class="auth-input" placeholder="6-digit pincode" %}
+          </div>
+        </div>
 
-<!-- 📍 ADDRESS -->
-{% render_field vendorForm.address_line placeholder="Address Line" %}
-{% render_field vendorForm.city placeholder="City" %}
-{% render_field vendorForm.state placeholder="State" %}
-{% render_field vendorForm.pincode placeholder="Pincode" %}
+        <!-- SECTION 4: KYC -->
+        <div class="form-section-title">
+          <i class="fa-solid fa-id-card"></i> KYC Verification Documents
+        </div>
+        <div class="form-grid form-grid-2">
+          <div class="auth-field">
+            <label>Aadhar Number</label>
+            {% render_field vendorForm.aadhar_number class="auth-input" placeholder="12-digit Aadhar number" %}
+          </div>
+          <div class="auth-field">
+            <label>PAN Number</label>
+            {% render_field vendorForm.pan_number class="auth-input" placeholder="10-character PAN" %}
+          </div>
+        </div>
 
-<!-- 🪪 KYC -->
-{% render_field vendorForm.aadhar_number placeholder="Aadhar Number" %}
-{% render_field vendorForm.pan_number placeholder="PAN Number" %}
+        <button type="submit" class="signup-submit">
+          Register Vendor Store <i class="fa-solid fa-arrow-right" style="margin-left:6px;"></i>
+        </button>
+      </form>
 
-
-
-<input type="submit" value="Register">
-
-</form>
-
-
+      <div class="signup-footer">
+        Already registered? <a href="/vendorlogin">Sign in to your vendor portal</a>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

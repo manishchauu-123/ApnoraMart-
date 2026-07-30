@@ -8,3 +8,9 @@ venv/
 *.pyc
 __pycache__/
 dummy.png
+media/
+venv/
+*.py
+set_vector_category_icons.py
+update_accurate_images.py
+update_category_icons.py
