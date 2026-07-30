@@ -21,7 +21,7 @@
     }
 
     .signup-header {
-      background: linear-gradient(135deg, #1b3a4b 0%, #006666 50%, #008080 100%);
+      background: linear-gradient(135deg, #0d1b3e 0%, #1a5cbd 50%, #2874f0 100%);
       padding: 40px 20px 70px;
       color: #fff;
       text-align: center;
@@ -67,13 +67,13 @@
     .form-section-title {
       font-size: 16px;
       font-weight: 700;
-      color: #008080;
+      color: #2874f0;
       display: flex;
       align-items: center;
       gap: 8px;
       margin-bottom: 16px;
       padding-bottom: 8px;
-      border-bottom: 2px solid #e8f5f5;
+      border-bottom: 2px solid #e8f0fe;
     }
 
     .form-grid {
@@ -106,15 +106,15 @@
       transition: all .2s;
     }
     .auth-input:focus {
-      border-color: #008080;
+      border-color: #2874f0;
       background: #fff;
-      box-shadow: 0 0 0 4px rgba(0,128,128,.12);
+      box-shadow: 0 0 0 4px rgba(40,116,240,.12);
     }
 
     .signup-submit {
       width: 100%;
       padding: 15px;
-      background: linear-gradient(135deg, #008080 0%, #006666 100%);
+      background: linear-gradient(135deg, #2874f0 0%, #1a5cbd 100%);
       color: #fff;
       border: none;
       border-radius: 12px;
@@ -123,12 +123,13 @@
       font-family: 'Inter', sans-serif;
       cursor: pointer;
       margin-top: 12px;
-      box-shadow: 0 6px 20px rgba(0,128,128,.35);
+      box-shadow: 0 6px 20px rgba(40,116,240,.35);
       transition: all .2s;
     }
     .signup-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 26px rgba(0,128,128,.45);
+      box-shadow: 0 8px 26px rgba(40,116,240,.45);
+      background: linear-gradient(135deg, #1a5cbd 0%, #154fa6 100%);
     }
 
     .signup-footer {
@@ -138,7 +139,7 @@
       color: #666;
     }
     .signup-footer a {
-      color: #008080;
+      color: #2874f0;
       font-weight: 700;
       text-decoration: none;
     }
@@ -206,12 +207,12 @@
             {% render_field vendorForm.address_line class="auth-input" placeholder="Shop No, Street, Landmark" %}
           </div>
           <div class="auth-field">
-            <label>City *</label>
-            {% render_field vendorForm.city class="auth-input" placeholder="e.g. Mumbai" %}
-          </div>
-          <div class="auth-field">
             <label>State *</label>
             {% render_field vendorForm.state class="auth-input" placeholder="e.g. Maharashtra" %}
+          </div>
+          <div class="auth-field">
+            <label>City *</label>
+            {% render_field vendorForm.city class="auth-input" placeholder="e.g. Mumbai" %}
           </div>
           <div class="auth-field">
             <label>Pincode *</label>
@@ -245,5 +246,165 @@
     </div>
   </div>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const stateInput = document.querySelector('input[name="state"]');
+      const cityInput = document.querySelector('input[name="city"]');
+      
+      if (stateInput && cityInput) {
+        // Indian States to Cities Mapping
+        const stateCityMap = {
+          "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Tirupati"],
+          "Assam": ["Guwahati", "Dibrugarh", "Silchar", "Tezpur", "Jorhat"],
+          "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Darbhanga"],
+          "Delhi": ["New Delhi", "Delhi NCR", "Dwarka", "Rohini"],
+          "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar"],
+          "Haryana": ["Gurugram", "Faridabad", "Panipat", "Ambala", "Rohtak"],
+          "Himachal Pradesh": ["Shimla", "Dharamshala", "Solan", "Mandi", "Hamirpur"],
+          "Jammu & Kashmir": ["Srinagar", "Jammu", "Anantnag", "Baramulla"],
+          "Karnataka": ["Bengaluru", "Mysuru", "Hubballi", "Mangaluru", "Belagavi"],
+          "Kerala": ["Kochi", "Trivandrum", "Kozhikode", "Thrissur", "Kollam"],
+          "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur", "Gwalior", "Ujjain"],
+          "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Thane", "Nashik", "Aurangabad"],
+          "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda"],
+          "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur", "Kota", "Ajmer"],
+          "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem"],
+          "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar"],
+          "Uttar Pradesh": ["Lucknow", "Kanpur", "Noida", "Ghaziabad", "Varanasi", "Agra", "Prayagraj", "Meerut", "Gorakhpur", "Bareilly", "Aligarh", "Moradabad"],
+          "West Bengal": ["Kolkata", "Howrah", "Durgapur", "Siliguri", "Asansol"]
+        };
+        
+        // 1. Create State Dropdown
+        const stateSelect = document.createElement("select");
+        stateSelect.name = "state";
+        stateSelect.id = stateInput.id;
+        stateSelect.className = stateInput.className;
+        stateSelect.required = true;
+        
+        // Add default option
+        const defaultStateOpt = document.createElement("option");
+        defaultStateOpt.value = "";
+        defaultStateOpt.textContent = "Select State";
+        stateSelect.appendChild(defaultStateOpt);
+        
+        // Populate states
+        Object.keys(stateCityMap).forEach(state => {
+          const opt = document.createElement("option");
+          opt.value = state;
+          opt.textContent = state;
+          if (stateInput.value === state) opt.selected = true;
+          stateSelect.appendChild(opt);
+        });
+        
+        // Replace state text input with select
+        stateInput.parentNode.replaceChild(stateSelect, stateInput);
+        
+        // 2. Create City Dropdown
+        const citySelect = document.createElement("select");
+        citySelect.name = "city";
+        citySelect.id = cityInput.id;
+        citySelect.className = cityInput.className;
+        citySelect.required = true;
+        
+        // Replace city text input with select
+        cityInput.parentNode.replaceChild(citySelect, cityInput);
+        
+        // Function to update cities based on selected state
+        function updateCities(selectedState, currentCityValue = "") {
+          citySelect.innerHTML = "";
+          
+          const defaultCityOpt = document.createElement("option");
+          defaultCityOpt.value = "";
+          defaultCityOpt.textContent = selectedState ? "Select City" : "Choose State First";
+          citySelect.appendChild(defaultCityOpt);
+          
+          if (selectedState && stateCityMap[selectedState]) {
+            stateCityMap[selectedState].forEach(city => {
+              const opt = document.createElement("option");
+              opt.value = city;
+              opt.textContent = city;
+              if (currentCityValue === city) opt.selected = true;
+              citySelect.appendChild(opt);
+            });
+          }
+        }
+        
+        // Initial population
+        updateCities(stateSelect.value, cityInput.value);
+        
+        // Trigger on change
+        stateSelect.addEventListener("change", function() {
+          updateCities(this.value);
+        });
+      }
+
+      // Enforce numeric validations and maximum lengths in real-time
+      const mobileInput = document.querySelector('input[name="mobile"]');
+      if (mobileInput) {
+        mobileInput.type = "tel";
+        mobileInput.maxLength = 10;
+        mobileInput.addEventListener("input", function() {
+          this.value = this.value.replace(/[^0-9]/g, ""); // Digits only
+        });
+      }
+
+      const aadharInput = document.querySelector('input[name="aadhar_number"]');
+      if (aadharInput) {
+        aadharInput.type = "tel";
+        aadharInput.maxLength = 12; // Aadhaar card is exactly 12 digits
+        aadharInput.addEventListener("input", function() {
+          this.value = this.value.replace(/[^0-9]/g, ""); // Digits only
+        });
+      }
+
+      const pincodeInput = document.querySelector('input[name="pincode"]');
+      if (pincodeInput) {
+        pincodeInput.type = "tel";
+        pincodeInput.maxLength = 6;
+        pincodeInput.addEventListener("input", function() {
+          this.value = this.value.replace(/[^0-9]/g, ""); // Digits only
+        });
+      }
+
+      const panInput = document.querySelector('input[name="pan_number"]');
+      if (panInput) {
+        panInput.maxLength = 10;
+        panInput.addEventListener("input", function() {
+          this.value = this.value.toUpperCase(); // Enforce uppercase for PAN Card
+        });
+      }
+
+      // Intercept submit to block invalid lengths
+      const form = document.querySelector('form');
+      if (form) {
+        form.addEventListener("submit", function(e) {
+          if (mobileInput && mobileInput.value.length !== 10) {
+            alert("Please enter a valid 10-digit Indian Mobile Number!");
+            mobileInput.focus();
+            e.preventDefault();
+            return false;
+          }
+          if (aadharInput && aadharInput.value.trim() !== "" && aadharInput.value.length !== 12) {
+            alert("Please enter a valid 12-digit Aadhaar Card number!");
+            aadharInput.focus();
+            e.preventDefault();
+            return false;
+          }
+          if (pincodeInput && pincodeInput.value.length !== 6) {
+            alert("Please enter a valid 6-digit Pincode!");
+            pincodeInput.focus();
+            e.preventDefault();
+            return false;
+          }
+          if (panInput && panInput.value.trim() !== "" && panInput.value.length !== 10) {
+            alert("Please enter a valid 10-character PAN Card number!");
+            panInput.focus();
+            e.preventDefault();
+            return false;
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
