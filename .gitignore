@@ -3,12 +3,6 @@
 *.pot
 *.pyc
 __pycache__
-db.sqlite3
-venv/
-*.pyc
-__pycache__/
-dummy.png
-media/
 venv/
 *.py
 set_vector_category_icons.py
