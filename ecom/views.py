@@ -122,8 +122,13 @@ def vendor_signup_view(request):
 
 # --- 4. PUBLIC VIEWS ---
 def home(request):
-    products = Product.objects.all()
     categories = Category.objects.all()
+    cat_id = request.GET.get('category')
+    if cat_id:
+        products = Product.objects.filter(category_id=cat_id)
+    else:
+        products = Product.objects.all()
+
     product_count_in_cart = 0
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
@@ -271,8 +276,13 @@ def cart_view(request):
 @login_required(login_url='customerlogin')
 @user_passes_test(is_customer)
 def customer_home_view(request):
-    products = models.Product.objects.all()
     categories = models.Category.objects.all()
+    cat_id = request.GET.get('category')
+    if cat_id:
+        products = models.Product.objects.filter(category_id=cat_id)
+    else:
+        products = models.Product.objects.all()
+        
     product_count_in_cart = 0
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
