@@ -411,6 +411,9 @@
       if (pincodeInput) {
         pincodeInput.type = "tel";
         pincodeInput.maxLength = 6;
+        if (pincodeInput.value === "000000") {
+          pincodeInput.value = "";
+        }
         pincodeInput.addEventListener("input", function() {
           this.value = this.value.replace(/[^0-9]/g, ""); // Digits only
         });
