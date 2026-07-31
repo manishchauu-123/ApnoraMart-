@@ -40,7 +40,7 @@ class Vendor(models.Model):
     lon = models.FloatField(default=0.0, null=True, blank=True)
 
     # KYC & Documents
-    aadhar_number = models.CharField(max_length=12, null=True)
+    aadhar_number = models.CharField(max_length=16, null=True)
     pan_number = models.CharField(max_length=10, default='ABCDE1234F')
     aadhar_image = models.ImageField(upload_to='vendor/aadhar/', null=True, blank=True)
     pan_image = models.ImageField(upload_to='vendor/pan/', null=True, blank=True)
